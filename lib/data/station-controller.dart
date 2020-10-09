@@ -19,35 +19,33 @@ class StationsController extends ChangeNotifier{
     await FlutterRadio.audioStart();
   }
 
-  Future changePlayingStatus() async {
-    _isPlaying = await FlutterRadio.isPlaying();
-    notifyListeners();
-  }
-
   void updateStationsList() {
     stations = _stationsRepository.stations;
     notifyListeners();
   }
 
-  void setStation(Station station) async {
-    this._current = station;
-    this._isPlaying = this._current != null;
-    notifyListeners();
-  }
-
   void play(Station station) async {
+
+    if(_isPlaying) stop();
+
     await FlutterRadio.play(url: station.uri);
-    setStation(station);
+    _setStation(station);
   }
 
   void stop() async {
     await FlutterRadio.stop();
-    setStation(null);
-  }
+    _setStation(null);
+  }  
 
   bool isPlaying() => _isPlaying;
 
   bool isPlayingStation(Station station) => _current == station;
 
   Station getCurrentStation() => _current;
+
+    void _setStation(Station station) async {
+    this._current = station;
+    this._isPlaying = this._current != null;
+    notifyListeners();
+  }
 }
