@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
-
+import 'picture-widget.dart';
 import 'station-tile.dart';
 
 class StationsListView extends StatefulWidget {
@@ -11,6 +11,7 @@ class StationsListView extends StatefulWidget {
 
 class _StationsListViewState extends State<StationsListView> {
   StationsController _stationsController = GetIt.instance<StationsController>();
+  String defaultImage = 'https://image.shutterstock.com/image-photo/retro-outdated-portable-stereo-boombox-600w-720777676.jpg';
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _StationsListViewState extends State<StationsListView> {
           var station = _stationsController.stations[index];
 
           return ListTile(
+            leading: PictureWidget(station.imageUrl.length > 0 ? station.imageUrl : defaultImage),
             title: StationText(
               stationTitle: station.name,
               isPlaying: _stationsController.isPlayingStation(station),
