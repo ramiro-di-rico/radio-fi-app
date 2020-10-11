@@ -27,19 +27,20 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
-      child: _stationsController.stations.length == 0
-          ? Text('No Stations Availabe.')
-          : Column(
-              children: _stationsController.isPlaying()
-                  ? [
-                      Expanded(flex: 9, child: StationsListView()),
-                      Expanded(
-                        flex: 1,
-                        child: BottomActionWdiget(),
-                      )
-                    ]
-                  : [Expanded(flex: 9, child: StationsListView())]),
+    return Center(
+      child: Column(
+          children: _stationsController.isPlaying() ||
+                  _stationsController.isSearching()
+              ? [
+                  Expanded(
+                      flex: _stationsController.isSearching() ? 3 : 9,
+                      child: StationsListView()),
+                  Expanded(
+                    flex: 1,
+                    child: BottomActionWdiget(),
+                  )
+                ]
+              : [Expanded(flex: 9, child: StationsListView())]),
     );
   }
 

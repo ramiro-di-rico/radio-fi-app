@@ -8,6 +8,8 @@ class StationsController extends ChangeNotifier{
   Station _current;
   bool _isPlaying = false;
   List<Station> stations = [];
+  String _searchText = '';
+  bool _editSearchText = false;
 
   StationsController(){
     _stationsRepository.syncStations();
@@ -19,7 +21,7 @@ class StationsController extends ChangeNotifier{
   }
 
   void updateStationsList() {
-    stations = _stationsRepository.stations;
+    _refreshStations();
     notifyListeners();
   }
 
@@ -46,5 +48,31 @@ class StationsController extends ChangeNotifier{
     this._current = station;
     this._isPlaying = this._current != null;
     notifyListeners();
+  }
+
+  changeTextEditState(bool value){
+    _editSearchText = value;
+
+    if(!_editSearchText) _refreshStations();
+    notifyListeners();
+  }
+
+  search(String value){
+    _searchText = value;
+
+    if(_searchText.length > 0){
+      stations.removeWhere((element) => !element.name.toLowerCase().contains(_searchText.toLowerCase()));
+    }else{
+      _refreshStations();
+    }
+
+    notifyListeners();
+  }
+
+  bool isSearching() => _editSearchText;
+
+  void _refreshStations(){
+    stations = [];
+    stations.addAll(_stationsRepository.stations);
   }
 }

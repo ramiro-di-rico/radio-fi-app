@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 class StationsRepository extends ChangeNotifier{
 
   List<Station> stations = [];
-  Station currentStation = null;
 
   void syncStations() async {
     var url = 'http://206.189.239.38:5910/api/radios';
