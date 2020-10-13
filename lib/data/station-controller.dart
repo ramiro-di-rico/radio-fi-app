@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_radio/flutter_radio.dart';
+import 'package:flutter_radio_player/flutter_radio_player.dart';
 import 'station.dart';
 import 'stations-repository.dart';
 
 class StationsController extends ChangeNotifier{
   StationsRepository _stationsRepository = StationsRepository();
+  FlutterRadioPlayer _flutterRadioPlayer = new FlutterRadioPlayer();
   Station _current;
   bool _isPlaying = false;
   List<Station> stations = [];
@@ -16,10 +17,6 @@ class StationsController extends ChangeNotifier{
     _stationsRepository.addListener(updateStationsList);
   }
 
-  Future<void> start() async {
-    await FlutterRadio.audioStart();
-  }
-
   void updateStationsList() {
     _refreshStations();
     notifyListeners();
@@ -28,13 +25,12 @@ class StationsController extends ChangeNotifier{
   void play(Station station) async {
 
     if(_isPlaying) stop();
-
-    await FlutterRadio.play(url: station.uri);
+    await _flutterRadioPlayer.init('Radio Fi', "Live", station.uri, 'true');
     _setStation(station);
   }
 
   void stop() async {
-    await FlutterRadio.stop();
+    await _flutterRadioPlayer.stop();
     _setStation(null);
   }  
 

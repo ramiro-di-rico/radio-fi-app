@@ -16,7 +16,6 @@ class _BottomActionWdigetState extends State<BottomActionWdiget> {
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
-    _stationsController.start();
   }
 
   @override

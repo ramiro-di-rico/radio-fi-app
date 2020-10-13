@@ -16,7 +16,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
-    _stationsController.start();
   }
 
   @override
