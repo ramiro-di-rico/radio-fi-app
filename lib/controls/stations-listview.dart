@@ -38,6 +38,8 @@ class _StationsListViewState extends State<StationsListView> {
               stationTitle: station.name,
               isPlaying: _stationsController.isPlayingStation(station),
             ),
+            trailing: FlatButton(onPressed: () {  },
+            child: Icon(Icons.star_outline)),
             onTap: () async {
               _stationsController.play(station);
             },

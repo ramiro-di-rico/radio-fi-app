@@ -28,8 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-          children: _stationsController.isPlaying() ||
-                  _stationsController.isSearching()
+          children: _stationsController.isPlaying()
               ? [
                   Expanded(
                       flex: _stationsController.isSearching() ? 3 : 9,
