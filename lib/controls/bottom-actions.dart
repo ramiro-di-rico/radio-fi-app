@@ -26,7 +26,7 @@ class _BottomActionWdigetState extends State<BottomActionWdiget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: ThemeData.dark().bottomAppBarColor,
+        color: Theme.of(context).bottomAppBarTheme.color,
         child: StationsControlsWdiget());
   }
 

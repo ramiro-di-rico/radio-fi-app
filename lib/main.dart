@@ -5,6 +5,7 @@ import 'myapp.dart';
 import 'data/station-controller.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   var controller = StationsController();
   GetIt.instance.registerSingleton(controller);
   

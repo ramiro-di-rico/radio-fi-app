@@ -65,6 +65,14 @@ class StationsController extends ChangeNotifier{
     notifyListeners();
   }
 
+  void setFavorite(Station station, bool star){
+    if(star){
+      _stationsRepository.star(station);
+    }else{
+      _stationsRepository.unstar(station);
+    }
+  }
+
   bool isSearching() => _editSearchText;
 
   void _refreshStations(){
