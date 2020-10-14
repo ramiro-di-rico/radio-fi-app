@@ -71,7 +71,12 @@ class _RadioAppBarState extends State<RadioAppBar> {
               suffixIcon: IconButton(
                   icon: Icon(Icons.check),
                   onPressed: currentText.length > 0
-                      ? () => _stationsController.changeTextEditState(false)
+                      ? () {                        
+                        if(_stationsController.stations.isNotEmpty){
+                          _stationsController.play(_stationsController.stations.first);
+                        }
+                        _stationsController.changeTextEditState(false);
+                      }
                       : null)),
         ),
       )

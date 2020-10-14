@@ -57,7 +57,10 @@ class StationsController extends ChangeNotifier{
     _searchText = value;
 
     if(_searchText.length > 0){
-      stations.removeWhere((element) => !element.name.toLowerCase().contains(_searchText.toLowerCase()));
+      stations = _stationsRepository
+        .stations
+        .where((element) => element.name.toLowerCase().contains(_searchText.toLowerCase()))
+        .toList();
     }else{
       _refreshStations();
     }

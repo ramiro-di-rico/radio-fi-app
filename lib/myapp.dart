@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tinycolor/tinycolor.dart';
 import 'controls/radio-app-bar.dart';
 import 'favorites-stations-screen.dart';
 import 'main-screen.dart';
@@ -19,6 +21,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var brightness = SchedulerBinding.instance.window.platformBrightness;
+
+    var current = brightness == Brightness.dark ? ThemeData.dark() : ThemeData.light();
+
     return new MaterialApp(
       themeMode: ThemeMode.system,
       theme: ThemeData.light(),
@@ -27,14 +33,15 @@ class _MyAppState extends State<MyApp> {
         appBar: RadioAppBar(),
         body: children[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: current.bottomAppBarColor,
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
-              label: 'Stations'
+              label: 'All Stations'
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.star_rate),
-              label: 'Stations'
+              label: 'Favourite Stations'
             )
           ],
           currentIndex: _selectedIndex,
