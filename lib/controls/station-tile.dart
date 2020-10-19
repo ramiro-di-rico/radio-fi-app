@@ -7,5 +7,5 @@ class StationText extends Text {
   StationText({@required this.stationTitle, @required this.isPlaying}) : super(stationTitle);
 
   @override
-  TextStyle get style => TextStyle(color: isPlaying ? Colors.greenAccent : null);
+  TextStyle get style => TextStyle(color: isPlaying ? Colors.blue[400] : null);
 }

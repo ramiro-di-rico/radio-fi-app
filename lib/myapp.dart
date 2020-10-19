@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tinycolor/tinycolor.dart';
 import 'controls/radio-app-bar.dart';
 import 'favorites-stations-screen.dart';
 import 'main-screen.dart';
@@ -30,22 +29,22 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: new Scaffold(
-        appBar: RadioAppBar(),
+        appBar: _selectedIndex == 0 ? RadioAppBar() : AppBar(title: Text('Radiofi'),),
         body: children[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: current.bottomAppBarColor,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'All Stations'
+              icon: Icon(Icons.radio),
+              label: 'Estaciones de Radio'
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.star_rate),
-              label: 'Favourite Stations'
+              label: 'Estaciones Favoritas'
             )
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.blue[400],
           onTap: _onItemTapped,
         ),
       ),

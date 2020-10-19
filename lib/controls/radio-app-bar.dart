@@ -63,13 +63,14 @@ class _RadioAppBarState extends State<RadioAppBar> {
           },
           decoration: InputDecoration(
               border: UnderlineInputBorder(),
-              labelText: 'station name',
               prefixIcon: IconButton(
+                color: Colors.redAccent,
                 icon: Icon(Icons.close),
                 onPressed: () => _stationsController.changeTextEditState(false),
               ),
               suffixIcon: IconButton(
                   icon: Icon(Icons.check),
+                  color: Colors.greenAccent,
                   onPressed: currentText.length > 0
                       ? () {                        
                         if(_stationsController.stations.isNotEmpty){
