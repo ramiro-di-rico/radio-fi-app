@@ -15,7 +15,7 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
-    volume = _stationsController.getVolume();
+    updateVolume();
   }
 
   @override
@@ -34,13 +34,9 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
           Text(currentStation != null ? currentStation.name : ''),
           Expanded(
             child: Slider(
-                value: volume,
-                onChanged: (vol) {
-                  setState(() {
-                    volume = vol;
-                    _stationsController.changeVolumen(vol);
-                  });
-                }),
+              value: volume,
+              onChanged: setVolume,
+            ),
           )
         ],
       ),
@@ -56,6 +52,19 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
   }
 
   void updateStationsList() {
-    setState(() {});
+    setState(() {
+      updateVolume();
+    });
+  }
+
+  void updateVolume() {
+    volume = _stationsController.getVolume();
+  }
+
+  void setVolume(double vol) {
+    setState(() {
+      volume = vol;
+      _stationsController.changeVolumen(vol);
+    });
   }
 }
