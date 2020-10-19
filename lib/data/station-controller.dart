@@ -11,6 +11,7 @@ class StationsController extends ChangeNotifier{
   List<Station> stations = [];
   String _searchText = '';
   bool _editSearchText = false;
+  double _volume = 1.0;
 
   StationsController(){
     _stationsRepository.syncStations();
@@ -33,6 +34,14 @@ class StationsController extends ChangeNotifier{
     await _flutterRadioPlayer.stop();
     _setStation(null);
   }  
+
+  void changeVolumen(double vol){
+    _volume = vol;
+    _flutterRadioPlayer.setVolume(_volume);
+    notifyListeners();
+  }
+
+  double getVolume() => _volume;
 
   bool isPlaying() => _isPlaying;
 

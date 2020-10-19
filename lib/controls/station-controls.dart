@@ -9,13 +9,41 @@ class StationsControlsWdiget extends StatefulWidget {
 
 class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
   StationsController _stationsController = GetIt.instance<StationsController>();
+  double volume = 1.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _stationsController.addListener(updateStationsList);
+    volume = _stationsController.getVolume();
+  }
+
+  @override
+  void dispose() {
+    _stationsController.removeListener(updateStationsList);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var currentStation = _stationsController.getCurrentStation();
 
     return ListTile(
-      title: Text(currentStation != null ? currentStation.name : ''),
+      title: Row(
+        children: [
+          Text(currentStation != null ? currentStation.name : ''),
+          Expanded(
+            child: Slider(
+                value: volume,
+                onChanged: (vol) {
+                  setState(() {
+                    volume = vol;
+                    _stationsController.changeVolumen(vol);
+                  });
+                }),
+          )
+        ],
+      ),
       trailing: FlatButton(
         child: Icon(Icons.stop),
         onPressed: () async {
@@ -25,5 +53,9 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
         },
       ),
     );
+  }
+
+  void updateStationsList() {
+    setState(() {});
   }
 }
