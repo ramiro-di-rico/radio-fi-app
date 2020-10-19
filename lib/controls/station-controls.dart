@@ -31,7 +31,9 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
     return ListTile(
       title: Row(
         children: [
-          Text(currentStation != null ? currentStation.name : ''),
+          Text(currentStation.name.length > 20 ? 
+                currentStation.name.substring(0, 20) : 
+                currentStation.name),
           Expanded(
             child: Slider(
               value: volume,
