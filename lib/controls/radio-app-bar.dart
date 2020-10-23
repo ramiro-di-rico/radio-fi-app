@@ -42,7 +42,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
 
   List<Widget> createNormalBarChildren() {
     return [
-      Text('Radiofi'),
+      Text('Radio App'),
       IconButton(
         icon: Icon(Icons.search),
         onPressed: () {

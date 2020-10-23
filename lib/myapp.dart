@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: new Scaffold(
-        appBar: _selectedIndex == 0 ? RadioAppBar() : AppBar(title: Text('Radiofi'),),
+        appBar: _selectedIndex == 0 ? RadioAppBar() : AppBar(title: Text('Radio App'),),
         body: children[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: current.bottomAppBarColor,
