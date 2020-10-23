@@ -30,15 +30,14 @@ class _MainScreenState extends State<MainScreen> {
       child: Column(
           children: _stationsController.isPlaying()
               ? [
-                  Expanded(
-                      flex: _stationsController.isSearching() ? 3 : 9,
-                      child: StationsListView()),
-                  Expanded(
-                    flex: 1,
-                    child: BottomActionWdiget(),
-                  )
+                  Expanded(child: StationsListView()),
+                  Baseline(
+                      baseline: 30,
+                      baselineType: TextBaseline.alphabetic,
+                      child: BottomActionWdiget(),
+                    )
                 ]
-              : [Expanded(flex: 9, child: StationsListView())]),
+              : [Expanded(child: StationsListView())]),
     );
   }
 

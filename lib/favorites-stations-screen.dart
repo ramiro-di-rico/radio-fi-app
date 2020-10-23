@@ -40,9 +40,10 @@ class _FavoritesStationsScreenState extends State<FavoritesStationsScreen> {
                   Expanded(
                       flex: _stationsController.isSearching() ? 3 : 9,
                       child: buildListView()),
-                  Expanded(
-                    flex: 1,
-                    child: BottomActionWdiget(),
+                  Baseline(
+                      baseline: 30,
+                      baselineType: TextBaseline.alphabetic,
+                      child: BottomActionWdiget(),
                   )
                 ]
               : [Expanded(flex: 9, child: buildListView())]));
