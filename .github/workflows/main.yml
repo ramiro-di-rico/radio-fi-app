@@ -13,14 +13,21 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-    # this flutter action does the heavy lifting for us
+    - run: echo $SIGNING_KEY | base64 -d > android/app/key.jks
+      env:
+        SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
     - uses: subosito/flutter-action@v1
       with:
-        channel: 'stable'  
+        flutter-version: '1.7.8+hotfix.4'
     # get packages as you used to in your computer
     - run: flutter pub get
     # Now build apk
     - run: flutter build apk --split-per-abi
+      env:
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          ALIAS: ${{ secrets.ALIAS }}
+          KEY_PATH: key.jks
     # now relase the just created build
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
