@@ -16,21 +16,33 @@ jobs:
     - run: echo $SIGNING_KEY | base64 -d > android/app/key.jks
       env:
         SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'stable'
+    #- uses: subosito/flutter-action@v1
+    #  with:
+    #    channel: 'stable'
     # get packages as you used to in your computer
-    - run: flutter pub get
+    #- run: flutter pub get
     # Now build apk
-    - run: flutter build apk --split-per-abi
-      env:
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          ALIAS: ${{ secrets.ALIAS }}
-          KEY_PATH: "key.jks"
+    #- run: flutter build apk --split-per-abi
+    #  env:
+    #      KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+    #      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    #      ALIAS: ${{ secrets.ALIAS }}
+    #      KEY_PATH: "key.jks"
     # now relase the just created build
-    - name: Create a Release APK
-      uses: ncipollo/release-action@v1
+    #- name: Create a Release APK
+    #  uses: ncipollo/release-action@v1
+    #  with:
+    #    artifacts: "build/app/outputs/apk/release/*.apk"
+    #    token: ${{ secrets.radio_app_secret }}
+    - uses: subosito/flutter-action@v1.1.1
       with:
-        artifacts: "build/app/outputs/apk/release/*.apk"
-        token: ${{ secrets.radio_app_secret }}
+        channel: 'dev'
+      env:
+        KEY_JKS: ${{ secrets.SIGNING_KEY }}
+        KEY_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
+        ALIAS_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: echo $KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
+    - uses: actions/upload-artifact@v1
+      with:
+        name: release-apk
+        path: build/app/outputs/apk/release/app-release.apk 
