@@ -34,14 +34,14 @@ jobs:
     #  with:
     #    artifacts: "build/app/outputs/apk/release/*.apk"
     #    token: ${{ secrets.radio_app_secret }}
-    - uses: subosito/flutter-action@v1.1.1
+    - uses: subosito/flutter-action@v1
       with:
-        channel: 'dev'
+        channel: 'stable'
       env:
         KEY_JKS: ${{ secrets.SIGNING_KEY }}
         KEY_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
         ALIAS_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: echo $KEY_JKS > key.jks && flutter pub get && flutter test && flutter build apk --release
+        run: echo $KEY_JKS > key.jks && flutter pub get && flutter build apk --release
     - uses: actions/upload-artifact@v1
       with:
         name: release-apk
