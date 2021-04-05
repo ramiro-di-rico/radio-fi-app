@@ -44,7 +44,7 @@ class StationsController extends ChangeNotifier {
     _initialized = false;
   }
 
-  void changeVolumen(double vol) async {
+  void changeVolume(double vol) async {
     _volume = vol;
     await _flutterRadioPlayer.setVolume(_volume);
     notifyListeners();
@@ -86,13 +86,15 @@ class StationsController extends ChangeNotifier {
     } else {
       _stationsRepository.unstar(station);
     }
+    _refreshStations();
   }
 
   bool isSearching() => _editSearchText;
 
   void _refreshStations() {
     stations = [];
-    stations.addAll(_stationsRepository.stations);
+    stations.addAll(_stationsRepository.stations.where((element) => element.star));
+    stations.addAll(_stationsRepository.stations.where((element) => !element.star));
   }
 
   void _setStation(Station station) async {

@@ -3,12 +3,12 @@ import 'package:get_it/get_it.dart';
 import '../data/station-controller.dart';
 import 'station-controls.dart';
 
-class BottomActionWdiget extends StatefulWidget {
+class BottomActionWidget extends StatefulWidget {
   @override
-  _BottomActionWdigetState createState() => _BottomActionWdigetState();
+  _BottomActionWidgetState createState() => _BottomActionWidgetState();
 }
 
-class _BottomActionWdigetState extends State<BottomActionWdiget> {
+class _BottomActionWidgetState extends State<BottomActionWidget> {
   StationsController _stationsController = GetIt.instance<StationsController>();
 
   @override
@@ -27,7 +27,7 @@ class _BottomActionWdigetState extends State<BottomActionWdiget> {
   Widget build(BuildContext context) {
     return Container(
         color: Theme.of(context).bottomAppBarColor,
-        child: StationsControlsWdiget());
+        child: StationsControlsWidget());
   }
 
   void updateStationsList() {

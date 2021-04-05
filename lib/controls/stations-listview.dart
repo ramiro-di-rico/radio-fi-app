@@ -32,21 +32,25 @@ class _StationsListViewState extends State<StationsListView> {
         itemBuilder: (context, index) {
           var station = _stationsController.stations[index];
 
-          return ListTile(
-            leading: PictureWidget(station.imageUrl.length > 0 ? station.imageUrl : defaultImage),
-            title: StationText(
-              stationTitle: station.name,
-              isPlaying: _stationsController.isPlayingStation(station),
+          return Card(
+            color: station.star ? Colors.yellow[100] : null,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: ListTile(
+              leading: PictureWidget(station.imageUrl.length > 0 ? station.imageUrl : defaultImage),
+              title: StationText(
+                stationTitle: station.name,
+                isPlaying: _stationsController.isPlayingStation(station),
+              ),
+              trailing: TextButton(onPressed: () {
+                setState(() {
+                  _stationsController.setFavorite(station, !station.star);
+                });
+               },
+              child: Icon(station.star ? Icons.star : Icons.star_outline)),
+              onTap: () async {
+                _stationsController.play(station);
+              },
             ),
-            trailing: FlatButton(onPressed: () { 
-              setState(() {
-                _stationsController.setFavorite(station, !station.star);
-              });
-             },
-            child: Icon(station.star ? Icons.star : Icons.star_outline)),
-            onTap: () async {
-              _stationsController.play(station);
-            },
           );
         });
   }
