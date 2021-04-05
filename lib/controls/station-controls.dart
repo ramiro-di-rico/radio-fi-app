@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
 
-class StationsControlsWdiget extends StatefulWidget {
+class StationsControlsWidget extends StatefulWidget {
   @override
-  _StationsControlsWdigetState createState() => _StationsControlsWdigetState();
+  _StationsControlsWidgetState createState() => _StationsControlsWidgetState();
 }
 
-class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
+class _StationsControlsWidgetState extends State<StationsControlsWidget> {
   StationsController _stationsController = GetIt.instance<StationsController>();
   double volume = 1.0;
 
@@ -31,8 +31,8 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
     return ListTile(
       title: Row(
         children: [
-          Text(currentStation.name.length > 20 ? 
-                currentStation.name.substring(0, 20) : 
+          Text(currentStation.name.length > 10 ?
+                currentStation.name.substring(0, 10) :
                 currentStation.name),
           Expanded(
             child: Slider(
@@ -42,7 +42,7 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
           )
         ],
       ),
-      trailing: FlatButton(
+      trailing: TextButton(
         child: Icon(Icons.stop),
         onPressed: () async {
           setState(() {
@@ -66,7 +66,7 @@ class _StationsControlsWdigetState extends State<StationsControlsWdiget> {
   void setVolume(double vol) {
     setState(() {
       volume = vol;
-      _stationsController.changeVolumen(vol);
+      _stationsController.changeVolume(vol);
     });
   }
 }

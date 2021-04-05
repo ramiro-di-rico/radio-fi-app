@@ -28,16 +28,18 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-          children: _stationsController.isPlaying()
-              ? [
+          children: [
                   Expanded(child: StationsListView()),
-                  Baseline(
-                      baseline: 30,
-                      baselineType: TextBaseline.alphabetic,
-                      child: BottomActionWdiget(),
-                    )
-                ]
-              : [Expanded(child: StationsListView())]),
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 500),
+                    opacity: _stationsController.isPlaying() ? 1.0 : 0.0,
+                    child: Baseline(
+                        baseline: 30,
+                        baselineType: TextBaseline.alphabetic,
+                        child: BottomActionWidget(),
+                      ),
+                  )
+                ]),
     );
   }
 
