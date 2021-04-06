@@ -11,7 +11,8 @@ class StationsListView extends StatefulWidget {
 
 class _StationsListViewState extends State<StationsListView> {
   StationsController _stationsController = GetIt.instance<StationsController>();
-  String defaultImage = 'https://image.shutterstock.com/image-photo/retro-outdated-portable-stereo-boombox-600w-720777676.jpg';
+  String defaultImage =
+      'https://image.shutterstock.com/image-photo/retro-outdated-portable-stereo-boombox-600w-720777676.jpg';
 
   @override
   void initState() {
@@ -34,19 +35,23 @@ class _StationsListViewState extends State<StationsListView> {
 
           return Card(
             color: station.star ? Colors.yellow[100] : null,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: ListTile(
-              leading: PictureWidget(station.imageUrl.length > 0 ? station.imageUrl : defaultImage),
+              leading: PictureWidget(station.imageUrl.length > 0
+                  ? station.imageUrl
+                  : defaultImage),
               title: StationText(
                 stationTitle: station.name,
                 isPlaying: _stationsController.isPlayingStation(station),
               ),
-              trailing: TextButton(onPressed: () {
-                setState(() {
-                  _stationsController.setFavorite(station, !station.star);
-                });
-               },
-              child: Icon(station.star ? Icons.star : Icons.star_outline)),
+              trailing: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _stationsController.setFavorite(station, !station.star);
+                    });
+                  },
+                  child: Icon(station.star ? Icons.star : Icons.star_outline)),
               onTap: () async {
                 _stationsController.play(station);
               },

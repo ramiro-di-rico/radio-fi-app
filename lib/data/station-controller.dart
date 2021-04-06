@@ -8,7 +8,7 @@ class StationsController extends ChangeNotifier {
   FlutterRadioPlayer _flutterRadioPlayer = new FlutterRadioPlayer();
   bool _initialized = false;
   Station _current;
-  bool _isPlaying = false;  
+  bool _isPlaying = false;
   String _searchText = '';
   bool _editSearchText = false;
   double _volume = 1.0;
@@ -26,10 +26,10 @@ class StationsController extends ChangeNotifier {
 
   void play(Station station) async {
     if (!_initialized) {
-      await _flutterRadioPlayer.init('Radio Fi', 'Live', station.uri, true.toString());
+      await _flutterRadioPlayer.init(
+          'Radio Fi', 'Live', station.uri, true.toString());
       _initialized = true;
-    } 
-    else{
+    } else {
       _flutterRadioPlayer.setUrl(station.uri, true.toString());
       await _flutterRadioPlayer.setVolume(_volume);
     }
@@ -86,15 +86,17 @@ class StationsController extends ChangeNotifier {
     } else {
       _stationsRepository.unstar(station);
     }
-    _refreshStations();
+    changeTextEditState(false);
   }
 
   bool isSearching() => _editSearchText;
 
   void _refreshStations() {
     stations = [];
-    stations.addAll(_stationsRepository.stations.where((element) => element.star));
-    stations.addAll(_stationsRepository.stations.where((element) => !element.star));
+    stations
+        .addAll(_stationsRepository.stations.where((element) => element.star));
+    stations
+        .addAll(_stationsRepository.stations.where((element) => !element.star));
   }
 
   void _setStation(Station station) async {

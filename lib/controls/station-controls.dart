@@ -28,12 +28,14 @@ class _StationsControlsWidgetState extends State<StationsControlsWidget> {
   Widget build(BuildContext context) {
     var currentStation = _stationsController.getCurrentStation();
 
+    if (currentStation == null) return Container();
+
     return ListTile(
       title: Row(
         children: [
-          Text(currentStation.name.length > 10 ?
-                currentStation.name.substring(0, 10) :
-                currentStation.name),
+          Text(currentStation.name.length > 10
+              ? currentStation.name.substring(0, 10)
+              : currentStation.name),
           Expanded(
             child: Slider(
               value: volume,
