@@ -34,7 +34,7 @@ class _StationsListViewState extends State<StationsListView> {
           var station = _stationsController.stations[index];
 
           return Card(
-            color: station.star ? Colors.yellow[100] : null,
+            color: station.star ? Colors.lightGreen[200] : null,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: ListTile(
