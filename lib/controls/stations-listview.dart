@@ -44,6 +44,7 @@ class _StationsListViewState extends State<StationsListView> {
               title: StationText(
                 stationTitle: station.name,
                 isPlaying: _stationsController.isPlayingStation(station),
+                star: station.star,
               ),
               trailing: TextButton(
                   onPressed: () {
