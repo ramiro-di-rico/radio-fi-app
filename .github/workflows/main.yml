@@ -20,8 +20,8 @@ jobs:
     #- run: flutter test need to include test folder
     - name: Configure Keystore for Android
       run: |
-        echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > upload-keystore.jks
-        echo "storeFile=upload-keystore.jks" >> key.properties
+        echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/keystore.jks
+        echo "storeFile=keystore.jks" >> key.properties
         echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
         echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
         echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
