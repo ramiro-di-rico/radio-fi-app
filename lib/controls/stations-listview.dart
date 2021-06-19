@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
 import 'picture-widget.dart';
-import 'station-tile.dart';
 
 class StationsListView extends StatefulWidget {
   @override
@@ -28,34 +27,45 @@ class _StationsListViewState extends State<StationsListView> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return ListView.builder(
         itemCount: _stationsController.stations.length,
         itemBuilder: (context, index) {
           var station = _stationsController.stations[index];
-
+          var isPlaying = _stationsController.isPlayingStation(station);
           return Card(
-            color: station.star ? Colors.lightGreen[200] : null,
+            color: isPlaying
+                ? Colors.orange[100]
+                : station.star
+                    ? Colors.lightGreen[200]
+                    : null,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: ListTile(
-              leading: PictureWidget(station.imageUrl.length > 0
-                  ? station.imageUrl
-                  : defaultImage),
-              title: StationText(
-                stationTitle: station.name,
-                isPlaying: _stationsController.isPlayingStation(station),
-                star: station.star,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: isPlaying ? 15 : 5),
+              child: ListTile(
+                leading: PictureWidget(station.imageUrl.length > 0
+                    ? station.imageUrl
+                    : defaultImage),
+                title: Text(
+                  station.name,
+                  style: TextStyle(
+                      color: station.star
+                          ? Colors.black
+                          : theme.textTheme.bodyText1.color),
+                ),
+                trailing: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        _stationsController.setFavorite(station, !station.star);
+                      });
+                    },
+                    child:
+                        Icon(station.star ? Icons.star : Icons.star_outline)),
+                onTap: () async {
+                  _stationsController.play(station);
+                },
               ),
-              trailing: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _stationsController.setFavorite(station, !station.star);
-                    });
-                  },
-                  child: Icon(station.star ? Icons.star : Icons.star_outline)),
-              onTap: () async {
-                _stationsController.play(station);
-              },
             ),
           );
         });

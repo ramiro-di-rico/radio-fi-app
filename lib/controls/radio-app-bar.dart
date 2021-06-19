@@ -67,18 +67,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
                 color: Colors.redAccent,
                 icon: Icon(Icons.close),
                 onPressed: () => _stationsController.changeTextEditState(false),
-              ),
-              suffixIcon: IconButton(
-                  icon: Icon(Icons.check),
-                  color: Colors.greenAccent,
-                  onPressed: currentText.length > 0
-                      ? () {                        
-                        if(_stationsController.stations.isNotEmpty){
-                          _stationsController.play(_stationsController.stations.first);
-                        }
-                        _stationsController.changeTextEditState(false);
-                      }
-                      : null)),
+              )),
         ),
       )
     ];

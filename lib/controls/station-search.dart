@@ -15,19 +15,18 @@ class _StationSearchWidgetState extends State<StationSearchWidget> {
   Widget build(BuildContext context) {
     return ListTile(
       title: TextField(
-        onChanged: (text){
+        onChanged: (text) {
           currentText = text;
           _stationsController.search(text);
         },
         decoration: InputDecoration(
-          border: UnderlineInputBorder(),
-          labelText: 'station name',
-          suffixIcon: IconButton(
-            icon: Icon(Icons.check),            
-            onPressed: currentText.length > 0 ? 
-                () => _stationsController.changeTextEditState(false) : 
-                null)
-        ),
+            border: UnderlineInputBorder(),
+            labelText: 'station name',
+            suffixIcon: IconButton(
+                icon: Icon(Icons.check),
+                onPressed: currentText.length > 0
+                    ? () => _stationsController.changeTextEditState(false)
+                    : null)),
       ),
     );
   }
