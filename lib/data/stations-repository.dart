@@ -52,9 +52,8 @@ class StationsRepository extends ChangeNotifier {
   }
 
   Future<List<Station>> _getStations() async {
-    var url = 'https://ramiro-di-rico.dev/radioapi/api/radios';
-
-    var response = await http.get(url);
+    var response = await http
+        .get(Uri.https("ramiro-di-rico.dev", "radioapi/api/stations"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       var result = data.map((e) => Station.fromJson(e)).toList();
