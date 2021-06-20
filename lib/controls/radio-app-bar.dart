@@ -36,7 +36,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: !isSearching
               ? createNormalBarChildren()
-              : createSearchBarChildren()),
+              : createSearchBarChildren(context)),
     );
   }
 
@@ -52,22 +52,30 @@ class _RadioAppBarState extends State<RadioAppBar> {
     ];
   }
 
-  List<Widget> createSearchBarChildren() {
+  List<Widget> createSearchBarChildren(BuildContext context) {
+    var theme = Theme.of(context);
     return [
       Expanded(
-        child: TextField(
-          autofocus: true,
-          onChanged: (text) {
-            currentText = text;
-            _stationsController.search(text);
-          },
-          decoration: InputDecoration(
-              border: UnderlineInputBorder(),
-              prefixIcon: IconButton(
-                color: Colors.redAccent,
-                icon: Icon(Icons.close),
-                onPressed: () => _stationsController.changeTextEditState(false),
-              )),
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+              color: lighten(theme.primaryColor),
+              borderRadius: BorderRadius.all(Radius.circular(70))),
+          child: TextField(
+            autofocus: true,
+            onChanged: (text) {
+              currentText = text;
+              _stationsController.search(text);
+            },
+            decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                prefixIcon: IconButton(
+                  color: Colors.red[900],
+                  icon: Icon(Icons.close),
+                  onPressed: () =>
+                      _stationsController.changeTextEditState(false),
+                )),
+          ),
         ),
       )
     ];
@@ -75,5 +83,15 @@ class _RadioAppBarState extends State<RadioAppBar> {
 
   void updateStationsList() {
     setState(() {});
+  }
+
+  Color lighten(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
+    final hslLight =
+        hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
   }
 }
