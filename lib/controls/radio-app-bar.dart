@@ -68,7 +68,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
               _stationsController.search(text);
             },
             decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                border: InputBorder.none,
                 prefixIcon: IconButton(
                   color: Colors.red[900],
                   icon: Icon(Icons.close),
