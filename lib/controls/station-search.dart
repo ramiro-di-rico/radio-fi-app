@@ -20,8 +20,7 @@ class _StationSearchWidgetState extends State<StationSearchWidget> {
           _stationsController.search(text);
         },
         decoration: InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'station name',
+            hintText: 'Hint Text',
             suffixIcon: IconButton(
                 icon: Icon(Icons.check),
                 onPressed: currentText.length > 0
