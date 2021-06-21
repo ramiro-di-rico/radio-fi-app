@@ -25,6 +25,15 @@ class _RadioAppBarState extends State<RadioAppBar> {
     _stationsController.addListener(updateStationsList);
     searchBarFocusNode = FocusNode();
     searchController = TextEditingController();
+    searchBarIconButton = IconButton(
+      splashColor: Colors.transparent,
+      icon: Icon(Icons.search),
+      color: Colors.blueAccent,
+      onPressed: () {
+        _stationsController.changeTextEditState(true);
+        searchBarFocusNode.requestFocus();
+      },
+    );
   }
 
   @override
@@ -60,7 +69,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
     return [
       Text('Radio App'),
       AnimatedContainer(
-        width: isSearching ? 250 : 50,
+        width: isSearching ? 230 : 50,
         padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),
         height: 50,
         decoration: BoxDecoration(
