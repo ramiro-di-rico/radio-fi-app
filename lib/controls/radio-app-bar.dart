@@ -16,12 +16,15 @@ class _RadioAppBarState extends State<RadioAppBar> {
   StationsController _stationsController = GetIt.instance<StationsController>();
   String currentText = '';
   Widget searchBarIconButton;
-  AnimationController _animatedController;
+  FocusNode searchBarFocusNode;
+  TextEditingController searchController;
 
   @override
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
+    searchBarFocusNode = FocusNode();
+    searchController = TextEditingController();
   }
 
   @override
@@ -66,24 +69,14 @@ class _RadioAppBarState extends State<RadioAppBar> {
         duration: Duration(seconds: 2),
         curve: Curves.fastLinearToSlowEaseIn,
         child: TextField(
-          autofocus: true,
+          controller: searchController,
+          focusNode: searchBarFocusNode,
           onChanged: (text) {
             currentText = text;
             _stationsController.search(text);
           },
           decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: AnimatedSwitcher(
-                  duration: Duration(seconds: 3),
-                  //switchInCurve: Curves.bounceIn,
-                  //switchOutCurve: Curves.bounceInOut,
-                  child: IconButton(
-                    splashColor: Colors.transparent,
-                    color: Colors.red[900],
-                    icon: Icon(isSearching ? Icons.search : Icons.close),
-                    onPressed: () =>
-                        _stationsController.changeTextEditState(!isSearching),
-                  ))),
+              border: InputBorder.none, prefixIcon: searchBarIconButton),
         ),
       )
     ];
@@ -96,13 +89,21 @@ class _RadioAppBarState extends State<RadioAppBar> {
           splashColor: Colors.transparent,
           color: Colors.red[900],
           icon: Icon(Icons.close),
-          onPressed: () => _stationsController.changeTextEditState(false),
+          onPressed: () {
+            _stationsController.changeTextEditState(false);
+            searchBarFocusNode.unfocus();
+            searchController.clear();
+          },
         );
       } else {
         searchBarIconButton = IconButton(
           splashColor: Colors.transparent,
           icon: Icon(Icons.search),
-          onPressed: () => _stationsController.changeTextEditState(true),
+          color: Colors.blueAccent,
+          onPressed: () {
+            _stationsController.changeTextEditState(true);
+            searchBarFocusNode.requestFocus();
+          },
         );
       }
     });
