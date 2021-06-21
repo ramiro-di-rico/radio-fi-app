@@ -15,6 +15,8 @@ class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _RadioAppBarState extends State<RadioAppBar> {
   StationsController _stationsController = GetIt.instance<StationsController>();
   String currentText = '';
+  Widget searchBarIconButton;
+  AnimationController _animatedController;
 
   @override
   void initState() {
@@ -30,13 +32,10 @@ class _RadioAppBarState extends State<RadioAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    var isSearching = _stationsController.isSearching();
     return AppBar(
       title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: !isSearching
-              ? createNormalBarChildren()
-              : createSearchBarChildren(context)),
+          children: createSearchBarChildren(context)),
     );
   }
 
@@ -53,36 +52,60 @@ class _RadioAppBarState extends State<RadioAppBar> {
   }
 
   List<Widget> createSearchBarChildren(BuildContext context) {
+    var isSearching = _stationsController.isSearching();
     var theme = Theme.of(context);
     return [
-      Expanded(
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-              color: lighten(theme.primaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(70))),
-          child: TextField(
-            autofocus: true,
-            onChanged: (text) {
-              currentText = text;
-              _stationsController.search(text);
-            },
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixIcon: IconButton(
-                  color: Colors.red[900],
-                  icon: Icon(Icons.close),
-                  onPressed: () =>
-                      _stationsController.changeTextEditState(false),
-                )),
-          ),
+      Text('Radio App'),
+      AnimatedContainer(
+        width: isSearching ? 250 : 50,
+        padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),
+        height: 50,
+        decoration: BoxDecoration(
+            color: lighten(theme.primaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(70))),
+        duration: Duration(seconds: 2),
+        curve: Curves.fastLinearToSlowEaseIn,
+        child: TextField(
+          autofocus: true,
+          onChanged: (text) {
+            currentText = text;
+            _stationsController.search(text);
+          },
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: AnimatedSwitcher(
+                  duration: Duration(seconds: 3),
+                  //switchInCurve: Curves.bounceIn,
+                  //switchOutCurve: Curves.bounceInOut,
+                  child: IconButton(
+                    splashColor: Colors.transparent,
+                    color: Colors.red[900],
+                    icon: Icon(isSearching ? Icons.search : Icons.close),
+                    onPressed: () =>
+                        _stationsController.changeTextEditState(!isSearching),
+                  ))),
         ),
       )
     ];
   }
 
   void updateStationsList() {
-    setState(() {});
+    setState(() {
+      if (_stationsController.isSearching()) {
+        searchBarIconButton = IconButton(
+          splashColor: Colors.transparent,
+          color: Colors.red[900],
+          icon: Icon(Icons.close),
+          onPressed: () => _stationsController.changeTextEditState(false),
+        );
+      } else {
+        searchBarIconButton = IconButton(
+          splashColor: Colors.transparent,
+          icon: Icon(Icons.search),
+          onPressed: () => _stationsController.changeTextEditState(true),
+        );
+      }
+    });
   }
 
   Color lighten(Color color, [double amount = .1]) {
