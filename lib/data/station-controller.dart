@@ -87,7 +87,9 @@ class StationsController extends ChangeNotifier {
     } else {
       _stationsRepository.unstar(station);
     }
-    _refreshStations();
+    if (!isSearching()) {
+      _refreshStations();
+    }
   }
 
   bool isSearching() => _editSearchText;
