@@ -13,6 +13,7 @@ class StationsController extends ChangeNotifier {
   bool _editSearchText = false;
   double _volume = 1.0;
   List<Station> stations = [];
+  int _index = -1;
 
   StationsController() {
     _stationsRepository.syncStations();
@@ -86,6 +87,7 @@ class StationsController extends ChangeNotifier {
     } else {
       _stationsRepository.unstar(station);
     }
+    _refreshStations();
   }
 
   bool isSearching() => _editSearchText;
@@ -102,5 +104,16 @@ class StationsController extends ChangeNotifier {
     this._current = station;
     this._isPlaying = this._current != null;
     notifyListeners();
+  }
+
+  void displayCurrentStation() {
+    _index = stations.indexOf(_current);
+    notifyListeners();
+  }
+
+  int getDisplayedStationIndex() {
+    var index = _index;
+    _index = -1;
+    return index;
   }
 }

@@ -12,6 +12,7 @@ class _StationsListViewState extends State<StationsListView> {
   StationsController _stationsController = GetIt.instance<StationsController>();
   String defaultImage =
       'https://image.shutterstock.com/image-photo/retro-outdated-portable-stereo-boombox-600w-720777676.jpg';
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _StationsListViewState extends State<StationsListView> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        controller: _scrollController,
         itemCount: _stationsController.stations.length,
         itemBuilder: (context, index) {
           var station = _stationsController.stations[index];
@@ -61,6 +63,13 @@ class _StationsListViewState extends State<StationsListView> {
   }
 
   void updateStationsList() {
-    setState(() {});
+    setState(() {
+      var stationIndex = _stationsController.getDisplayedStationIndex();
+      if (stationIndex > 0) {
+        var value = double.parse((stationIndex * 64).toString());
+        _scrollController.animateTo(value,
+            duration: Duration(seconds: 2), curve: Curves.easeIn);
+      }
+    });
   }
 }

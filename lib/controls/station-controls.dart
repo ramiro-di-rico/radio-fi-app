@@ -33,9 +33,12 @@ class _StationsControlsWidgetState extends State<StationsControlsWidget> {
     return ListTile(
       title: Row(
         children: [
-          Text(currentStation.name.length > 10
-              ? currentStation.name.substring(0, 10)
-              : currentStation.name),
+          TextButton(
+            onPressed: () => _stationsController.displayCurrentStation(),
+            child: Text(currentStation.name.length > 10
+                ? currentStation.name.substring(0, 10)
+                : currentStation.name),
+          ),
           Expanded(
             child: Slider(
               value: volume,
