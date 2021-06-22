@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
 
+import '../info-scree.dart';
+
 class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
   final AppBar _appBar = new AppBar();
 
@@ -51,23 +53,20 @@ class _RadioAppBarState extends State<RadioAppBar> {
     );
   }
 
-  List<Widget> createNormalBarChildren() {
-    return [
-      Text('Radio App'),
-      IconButton(
-        icon: Icon(Icons.search),
-        onPressed: () {
-          _stationsController.changeTextEditState(true);
-        },
-      )
-    ];
-  }
-
   List<Widget> createSearchBarChildren(BuildContext context) {
     var isSearching = _stationsController.isSearching();
     var theme = Theme.of(context);
     return [
-      Text('Radio App'),
+      Row(
+        children: [
+          Text('Radio App'),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, InfoScreen.id);
+              },
+              icon: Icon(Icons.info_outlined))
+        ],
+      ),
       AnimatedContainer(
         width: isSearching ? 230 : 50,
         padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),

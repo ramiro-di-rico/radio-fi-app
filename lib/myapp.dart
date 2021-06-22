@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'controls/radio-app-bar.dart';
+import 'info-scree.dart';
 import 'main-screen.dart';
 
 class MyApp extends StatefulWidget {
@@ -9,17 +9,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       themeMode: ThemeMode.system,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: new Scaffold(
-        appBar: RadioAppBar(),
-        body: MainScreen()
-      ),
+      routes: {
+        MainScreen.id: (context) => MainScreen(),
+        InfoScreen.id: (context) => InfoScreen()
+      },
+      initialRoute: MainScreen.id,
     );
   }
 }

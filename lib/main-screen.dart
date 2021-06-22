@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'controls/bottom-actions.dart';
+import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
 import 'data/station-controller.dart';
 
 class MainScreen extends StatefulWidget {
+  static const String id = 'main_screen';
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -26,20 +29,23 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-          children: [
-                  Expanded(child: StationsListView()),
-                  AnimatedOpacity(
-                    duration: Duration(milliseconds: 500),
-                    opacity: _stationsController.isPlaying() ? 1.0 : 0.0,
-                    child: Baseline(
-                        baseline: 30,
-                        baselineType: TextBaseline.alphabetic,
-                        child: BottomActionWidget(),
-                      ),
-                  )
-                ]),
+    var isPlaying = _stationsController.isPlaying();
+    return Scaffold(
+      appBar: RadioAppBar(),
+      body: Center(
+        child: Column(children: [
+          Expanded(child: StationsListView()),
+          AnimatedOpacity(
+            duration: Duration(milliseconds: 500),
+            opacity: isPlaying ? 1.0 : 0.0,
+            child: Baseline(
+              baseline: isPlaying ? 30 : 0,
+              baselineType: TextBaseline.alphabetic,
+              child: BottomActionWidget(),
+            ),
+          )
+        ]),
+      ),
     );
   }
 
