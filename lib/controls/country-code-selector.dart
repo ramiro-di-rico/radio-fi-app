@@ -29,7 +29,10 @@ class _CountryCodeSelectorState extends State<CountryCodeSelector> {
                     .map((e) => DropdownMenuItem(child: Text(e), value: e))
                     .toList(),
                 onChanged: (value) {
-                  stationsController.changeCountryCode(value);
+                  setState(() {
+                    selectedCountryCode = value;
+                    stationsController.changeCountryCode(value);
+                  });
                 },
               ),
             ),
