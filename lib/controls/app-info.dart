@@ -39,43 +39,35 @@ class _AppInfoWidgetState extends State<AppInfoWidget> {
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text(
-                          "Application Information",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text(
+                                "Application Information",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text("App name : $appName"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text("Package: $packageName"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text("Version: $version"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text("Build number $buildNumber"),
+                            )
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text("App name : $appName"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text("Package: $packageName"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text("Version: $version"),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Text("Build number $buildNumber"),
                       ),
                     ],
                   )
