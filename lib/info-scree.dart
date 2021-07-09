@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
+import 'controls/country-code-selector.dart';
+
 class InfoScreen extends StatefulWidget {
   static const String id = 'info_screen';
 
@@ -44,6 +46,7 @@ class _InfoScreenState extends State<InfoScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
+              CountryCodeSelector(),
               Card(
                 child: infoLoaded
                     ? Padding(

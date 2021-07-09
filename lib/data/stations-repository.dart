@@ -9,12 +9,15 @@ import 'package:http/http.dart' as http;
 
 class StationsRepository extends ChangeNotifier {
   List<Station> stations = [];
+  List<String> countryCodes = [];
   List<String> starredStations = List.empty(growable: true);
   File file;
+  String _countryCode = CountryCodes.detailsForLocale().alpha2Code;
 
   void syncStations() async {
     file = await _loadCsvFile();
     await _loadStarredStations();
+    stations.clear();
     var endpointStations = await _getStations();
     stations.addAll(endpointStations);
     for (var i = 0; i < stations.length; i++) {
@@ -53,8 +56,7 @@ class StationsRepository extends ChangeNotifier {
   }
 
   Future<List<Station>> _getStations() async {
-    final CountryDetails details = CountryCodes.detailsForLocale();
-    var queryParameters = {'Active': 'true', 'CountryCode': details.alpha2Code};
+    var queryParameters = {'Active': 'true', 'CountryCode': _countryCode};
 
     var response = await http.get(Uri.https(
         "ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
@@ -77,5 +79,17 @@ class StationsRepository extends ChangeNotifier {
     final directory = await getApplicationDocumentsDirectory();
 
     return File('${directory.path}/stations.csv');
+  }
+
+  void changeCountryCode(String countryCode) {
+    _countryCode = countryCode;
+    syncStations();
+  }
+
+  Future loadCountryCodes() async {
+    var response = await http.get(
+        Uri.https("ramiro-di-rico.dev", "radioapi/api/stations/countryCodes"));
+    List data = json.decode(response.body);
+    countryCodes = data.map((e) => e.toString()).toList();
   }
 }

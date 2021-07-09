@@ -16,6 +16,7 @@ class StationsController extends ChangeNotifier {
   int _index = -1;
 
   StationsController() {
+    _stationsRepository.loadCountryCodes();
     _stationsRepository.syncStations();
     _stationsRepository.addListener(updateStationsList);
   }
@@ -117,5 +118,11 @@ class StationsController extends ChangeNotifier {
     var index = _index;
     _index = -1;
     return index;
+  }
+
+  List<String> getCountryCodes() => _stationsRepository.countryCodes;
+
+  void changeCountryCode(String countryCode) {
+    _stationsRepository.changeCountryCode(countryCode);
   }
 }
