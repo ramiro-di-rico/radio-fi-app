@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'station.dart';
@@ -52,8 +53,11 @@ class StationsRepository extends ChangeNotifier {
   }
 
   Future<List<Station>> _getStations() async {
-    var response = await http
-        .get(Uri.https("ramiro-di-rico.dev", "radioapi/api/stations"));
+    final CountryDetails details = CountryCodes.detailsForLocale();
+    var queryParameters = {'Active': 'true', 'CountryCode': details.alpha2Code};
+
+    var response = await http.get(Uri.https(
+        "ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       var result = data.map((e) => Station.fromJson(e)).toList();

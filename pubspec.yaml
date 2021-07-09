@@ -15,6 +15,7 @@ dependencies:
   flutter_radio_player: ^1.0.7
   path_provider: ^1.6.18
   package_info: ^2.0.2
+  country_codes: ^2.0.1
 
 flutter:
   uses-material-design: true
