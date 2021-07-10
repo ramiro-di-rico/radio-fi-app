@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PictureWidget extends StatelessWidget {
+  final String imageUrl;
 
-  final String imageUrl; 
-  
   PictureWidget(this.imageUrl);
 
   @override
@@ -12,9 +11,16 @@ class PictureWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          child: Image.network(imageUrl, 
-            width: 40,
-          )
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              imageUrl,
+              width: 30,
+              errorBuilder: (context, o, trace) {
+                return Icon(Icons.radio_sharp);
+              },
+            ),
+          ),
         ),
       ],
     );

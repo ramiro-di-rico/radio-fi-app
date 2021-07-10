@@ -10,8 +10,6 @@ class StationsListView extends StatefulWidget {
 
 class _StationsListViewState extends State<StationsListView> {
   StationsController _stationsController = GetIt.instance<StationsController>();
-  String defaultImage =
-      'https://image.shutterstock.com/image-photo/retro-outdated-portable-stereo-boombox-600w-720777676.jpg';
   ScrollController _scrollController = ScrollController();
 
   @override
@@ -41,9 +39,7 @@ class _StationsListViewState extends State<StationsListView> {
                     color: isPlaying ? Colors.blueAccent : Colors.transparent),
                 borderRadius: BorderRadius.circular(20)),
             child: ListTile(
-              leading: PictureWidget(station.imageUrl.length > 0
-                  ? station.imageUrl
-                  : defaultImage),
+              leading: PictureWidget(station.imageUrl),
               title: Text(
                 station.name,
               ),
