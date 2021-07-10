@@ -56,6 +56,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
   List<Widget> createSearchBarChildren(BuildContext context) {
     var isSearching = _stationsController.isSearching();
     var theme = Theme.of(context);
+    var width = MediaQuery.of(context).size.width;
     return [
       Row(
         children: [
@@ -68,7 +69,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
         ],
       ),
       AnimatedContainer(
-        width: isSearching ? 230 : 50,
+        width: isSearching ? (width / 2) : 50,
         padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),
         height: 50,
         decoration: BoxDecoration(
