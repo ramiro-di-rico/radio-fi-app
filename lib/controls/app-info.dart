@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppInfoWidget extends StatefulWidget {
   @override
@@ -45,26 +46,32 @@ class _AppInfoWidgetState extends State<AppInfoWidget> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
                               child: Text(
-                                "Application Information",
+                                AppLocalizations.of(context)
+                                    .applicationInformation,
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text("App name : $appName"),
+                              child: Text(AppLocalizations.of(context).appName +
+                                  ": $appName"),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text("Package: $packageName"),
+                              child: Text(AppLocalizations.of(context).package +
+                                  ": $packageName"),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text("Version: $version"),
+                              child: Text(AppLocalizations.of(context).version +
+                                  ": $version"),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text("Build number $buildNumber"),
+                              child: Text(
+                                  AppLocalizations.of(context).buildNumber +
+                                      ": $buildNumber"),
                             )
                           ],
                         ),

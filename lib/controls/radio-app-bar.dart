@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../info-scree.dart';
 
 class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -59,7 +59,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
     return [
       Row(
         children: [
-          Text('Radio App'),
+          Text(AppLocalizations.of(context).appTitle),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, InfoScreen.id);

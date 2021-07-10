@@ -1,0 +1,13 @@
+{
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "appName": "App Name",
+  "appTitle": "Radio App",
+  "applicationInformation": "Application Information",
+  "buildNumber": "Build Number",
+  "country": "Country Code",
+  "helloWorld": "Hello World!",
+  "package": "Package",
+  "version": "Version"
+}

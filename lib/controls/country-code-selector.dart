@@ -2,6 +2,7 @@ import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CountryCodeSelector extends StatefulWidget {
   @override
@@ -20,7 +21,8 @@ class _CountryCodeSelectorState extends State<CountryCodeSelector> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
-            Expanded(child: Text('Country'), flex: 1),
+            Expanded(
+                child: Text(AppLocalizations.of(context).country), flex: 1),
             Expanded(
               flex: 1,
               child: DropdownButton(

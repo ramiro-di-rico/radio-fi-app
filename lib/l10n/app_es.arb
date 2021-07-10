@@ -1,0 +1,10 @@
+{
+  "appName": "Nombre de la App",
+  "appTitle": "App Radio",
+  "applicationInformation": "Informacion de la App",
+  "buildNumber": "Numero de compilacion",
+  "country": "Codigo Pais",
+  "helloWorld": "Hola Mundo!",
+  "package": "Paquete",
+  "version": "Version"
+}
