@@ -15,14 +15,14 @@ class StationsService extends ChangeNotifier {
   List<String> starredStations = List.empty(growable: true);
   File file;
   String _countryCode = CountryCodes.detailsForLocale().alpha2Code;
-  StationsRepository _stationsDatabase = StationsRepository();
+  StationsRepository _stationsRepository = StationsRepository();
   ConfigurationsRepository _configurationsRepository =
       ConfigurationsRepository();
 
   Future syncStations() async {
     stations.clear();
     var savedStations =
-        await _stationsDatabase.getStations(countryCode: _countryCode);
+        await _stationsRepository.getStations(countryCode: _countryCode);
     stations.addAll(savedStations.where((element) => element.star).toList());
     stations.addAll(savedStations.where((element) => !element.star).toList());
     var needSync = await _configurationsRepository.needSync();
@@ -37,18 +37,18 @@ class StationsService extends ChangeNotifier {
   Future _backgroundSync() async {
     stations.clear();
     var endpointStations = await _getStations();
-    await _stationsDatabase.bulkAdd(endpointStations);
-    stations = await _stationsDatabase.getStations(countryCode: _countryCode);
+    await _stationsRepository.bulkAdd(endpointStations);
+    stations = await _stationsRepository.getStations(countryCode: _countryCode);
   }
 
   void star(Station station) async {
     station.star = true;
-    await _stationsDatabase.update(station);
+    await _stationsRepository.update(station);
   }
 
   void unstar(Station station) async {
     station.star = false;
-    await _stationsDatabase.update(station);
+    await _stationsRepository.update(station);
   }
 
   Future<List<Station>> _getStations() async {
