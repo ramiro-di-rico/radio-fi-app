@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_radio_player/flutter_radio_player.dart';
 import 'station.dart';
-import 'stations-repository.dart';
+import 'stations-service.dart';
 
 class StationsController extends ChangeNotifier {
-  StationsRepository _stationsRepository = StationsRepository();
+  StationsService _stationsRepository = StationsService();
   FlutterRadioPlayer _flutterRadioPlayer = new FlutterRadioPlayer();
   bool _initialized = false;
   Station _current;

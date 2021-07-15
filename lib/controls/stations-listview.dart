@@ -26,36 +26,41 @@ class _StationsListViewState extends State<StationsListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        controller: _scrollController,
-        itemCount: _stationsController.stations.length,
-        itemBuilder: (context, index) {
-          var station = _stationsController.stations[index];
-          var isPlaying = _stationsController.isPlayingStation(station);
-          return Card(
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                    width: 3,
-                    color: isPlaying ? Colors.blueAccent : Colors.transparent),
-                borderRadius: BorderRadius.circular(20)),
-            child: ListTile(
-              leading: PictureWidget(station.imageUrl),
-              title: Text(
-                station.name,
-              ),
-              trailing: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _stationsController.setFavorite(station, !station.star);
-                    });
+    return _stationsController.stations.isEmpty
+        ? Center(child: CircularProgressIndicator())
+        : ListView.builder(
+            controller: _scrollController,
+            itemCount: _stationsController.stations.length,
+            itemBuilder: (context, index) {
+              var station = _stationsController.stations[index];
+              var isPlaying = _stationsController.isPlayingStation(station);
+              return Card(
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        width: 3,
+                        color:
+                            isPlaying ? Colors.blueAccent : Colors.transparent),
+                    borderRadius: BorderRadius.circular(20)),
+                child: ListTile(
+                  leading: PictureWidget(station.imageUrl),
+                  title: Text(
+                    station.name,
+                  ),
+                  trailing: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _stationsController.setFavorite(
+                              station, !station.star);
+                        });
+                      },
+                      child:
+                          Icon(station.star ? Icons.star : Icons.star_outline)),
+                  onTap: () async {
+                    _stationsController.play(station);
                   },
-                  child: Icon(station.star ? Icons.star : Icons.star_outline)),
-              onTap: () async {
-                _stationsController.play(station);
-              },
-            ),
-          );
-        });
+                ),
+              );
+            });
   }
 
   void updateStationsList() {

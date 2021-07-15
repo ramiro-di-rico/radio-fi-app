@@ -1,95 +1,91 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:radio_fi/data/database-helper.dart';
+import 'package:sqflite/sqflite.dart';
+
 import 'station.dart';
-import 'package:http/http.dart' as http;
 
-class StationsRepository extends ChangeNotifier {
-  List<Station> stations = [];
-  List<String> countryCodes = [];
-  List<String> starredStations = List.empty(growable: true);
-  File file;
-  String _countryCode = CountryCodes.detailsForLocale().alpha2Code;
+class StationsRepository {
+  static final columnId = 'id';
+  DatabaseHelper _dbHelper = DatabaseHelper();
 
-  void syncStations() async {
-    file = await _loadCsvFile();
-    await _loadStarredStations();
-    stations.clear();
-    var endpointStations = await _getStations();
-    stations.addAll(endpointStations);
-    for (var i = 0; i < stations.length; i++) {
-      var station = stations[i];
-      if (starredStations.any((element) => element == station.name)) {
-        station.star = true;
-      }
-    }
-    notifyListeners();
-  }
-
-  void star(Station station) {
-    station.star = true;
-    starredStations.add(station.name);
-    _writeStarredStations();
-  }
-
-  void unstar(Station station) {
-    if (starredStations.any((element) => element == station.name)) {
-      station.star = false;
-    }
-    starredStations.removeWhere((element) => element == station.name);
-    _writeStarredStations();
-  }
-
-  Future _loadStarredStations() async {
-    if (!await file.exists()) {
-      await file.create();
-    }
-
-    String contents = await file.readAsString();
-    var splits = contents.split(',');
-    if (contents.isNotEmpty) {
-      starredStations.addAll(splits);
-    }
-  }
-
-  Future<List<Station>> _getStations() async {
-    var queryParameters = {'Active': 'true', 'CountryCode': _countryCode};
-
-    var response = await http.get(Uri.https(
-        "ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
-    if (response.statusCode == 200) {
-      List data = json.decode(response.body);
-      var result = data.map((e) => Station.fromJson(e)).toList();
+  Future<List<Station>> getStations({String countryCode}) async {
+    try {
+      var database = await _dbHelper.getDb();
+      var query = countryCode == null
+          ? 'SELECT * FROM Stations ORDER BY lower(name) ASC'
+          : 'SELECT * FROM Stations WHERE countryCode = "$countryCode" ORDER BY lower(name) ASC';
+      List<Map> list = await database.rawQuery(query);
+      var result = list.map((e) => Station.fromJson(e)).toList();
       return result;
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
+    } catch (e) {
+      debugPrint(e);
       return List.empty();
     }
   }
 
-  Future _writeStarredStations() async {
-    var contents = starredStations.map((e) => '$e,').join();
-    await file.writeAsString(contents);
+  Future update(Station station) async {
+    try {
+      var database = await _dbHelper.getDb();
+      var values = {
+        'name': station.name,
+        'uri': station.uri,
+        'imageUrl': station.imageUrl,
+        'star': station.star,
+        'countryCode': station.countryCode
+      };
+
+      int updateCount = await database.update('Stations', values,
+          where: '$columnId = ?', whereArgs: [station.id]);
+      debugPrint('rows updated $updateCount');
+    } catch (e) {
+      debugPrint(e);
+    }
   }
 
-  Future<File> _loadCsvFile() async {
-    final directory = await getApplicationDocumentsDirectory();
+  Future add(Station station) async {
+    try {
+      var database = await _dbHelper.getDb();
+      var values = {
+        'id': station.id,
+        'name': station.name,
+        'uri': station.uri,
+        'imageUrl': station.imageUrl,
+        'star': station.star,
+        'countryCode': station.countryCode
+      };
 
-    return File('${directory.path}/stations.csv');
+      await database.insert('Stations', values,
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    } catch (e) {
+      debugPrint(e);
+    }
   }
 
-  void changeCountryCode(String countryCode) {
-    _countryCode = countryCode;
-    syncStations();
-  }
+  Future bulkAdd(List<Station> stations) async {
+    try {
+      var storedStations = await getStations();
+      var database = await _dbHelper.getDb();
+      var batch = database.batch();
+      for (var i = 0; i < stations.length; i++) {
+        var station = stations[i];
+        var storedStation = storedStations.firstWhere(
+            (element) => element.id == station.id,
+            orElse: () => null);
+        var values = {
+          'id': station.id,
+          'name': station.name,
+          'uri': station.uri,
+          'imageUrl': station.imageUrl,
+          'star': storedStation != null ? storedStation.star : false,
+          'countryCode': station.countryCode
+        };
 
-  Future loadCountryCodes() async {
-    var response = await http.get(
-        Uri.https("ramiro-di-rico.dev", "radioapi/api/stations/countryCodes"));
-    List data = json.decode(response.body);
-    countryCodes = data.map((e) => e.toString()).toList();
+        batch.insert('Stations', values,
+            conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+      batch.commit();
+    } catch (e) {
+      debugPrint(e);
+    }
   }
 }
