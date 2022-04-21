@@ -2,7 +2,8 @@ name: Build App
 
 on:
   push:
-    branches: [ master ]
+    tags: 
+      - '*'
     
 jobs:
   build:
@@ -18,6 +19,15 @@ jobs:
         channel: 'stable' # or: 'beta', 'dev' or 'master'
     - run: flutter pub get
     #- run: flutter test need to include test folder
+
+    - name: Get build name
+      id: build_name
+      run: echo ::set-output name=VERSION::$(echo ${{ github.ref_name }} | cut -d '-' -f 1)
+
+    - name: Get build number
+      id: build_number
+      run: echo ::set-output name=VERSION::$(echo ${{ github.ref_name }} | cut -d '-' -f 2)
+
     - name: Configure Keystore for Android
       run: |
         echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > app/keystore.jks
@@ -33,7 +43,7 @@ jobs:
       working-directory: android
 
     # Build the application.
-    - run: flutter build -v apk --split-per-abi
+    - run: flutter build -v apk --release --split-per-abi --build-name ${{ steps.build_name.outputs.VERSION }} --build-number ${{ steps.build_number.outputs.VERSION }}
     
     # Upload generated apk to the artifacts.
     - uses: actions/upload-artifact@v1
