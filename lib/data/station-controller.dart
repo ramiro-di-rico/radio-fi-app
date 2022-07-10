@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_radio_player/flutter_radio_player.dart';
+import 'package:just_audio/just_audio.dart';
 import 'station.dart';
 import 'stations-service.dart';
 
 class StationsController extends ChangeNotifier {
   StationsService _stationsRepository = StationsService();
-  FlutterRadioPlayer _flutterRadioPlayer = new FlutterRadioPlayer();
+  //FlutterRadioPlayer _flutterRadioPlayer = new FlutterRadioPlayer();
+  AudioPlayer _flutterRadioPlayer = new AudioPlayer();
   bool _initialized = false;
   Station _current;
   bool _isPlaying = false;
@@ -28,11 +30,14 @@ class StationsController extends ChangeNotifier {
 
   void play(Station station) async {
     if (!_initialized) {
+      /*
       await _flutterRadioPlayer.init(
           'Radio Fi', 'Live', station.uri, true.toString());
+          */
+      //_flutterRadioPlayer.setUrl(station.uri);
       _initialized = true;
     } else {
-      _flutterRadioPlayer.setUrl(station.uri, true.toString());
+      _flutterRadioPlayer.setUrl(station.uri);
       await _flutterRadioPlayer.setVolume(_volume);
     }
 
