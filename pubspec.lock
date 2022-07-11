@@ -49,7 +49,7 @@ packages:
       name: country_codes
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.0"
   crypto:
     dependency: transitive
     description:
