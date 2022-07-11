@@ -4,13 +4,15 @@ import 'package:get_it/get_it.dart';
 import 'package:radio_fi/data/station-controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../data/sync-station-controller.dart';
+
 class CountryCodeSelector extends StatefulWidget {
   @override
   _CountryCodeSelectorState createState() => _CountryCodeSelectorState();
 }
 
 class _CountryCodeSelectorState extends State<CountryCodeSelector> {
-  StationsController stationsController = GetIt.I<StationsController>();
+  SyncStationsController stationsController = GetIt.I<SyncStationsController>();
   String selectedCountryCode = CountryCodes.detailsForLocale().alpha2Code;
 
   @override
