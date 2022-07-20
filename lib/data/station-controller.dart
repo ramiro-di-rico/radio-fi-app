@@ -21,8 +21,9 @@ class StationsController extends ChangeNotifier {
   }
 
   void play(Station station) async {
-    _flutterRadioPlayer.setUrl(station.uri);
+    await _flutterRadioPlayer.setUrl(station.uri);
     await _flutterRadioPlayer.setVolume(_volume);
+    await _flutterRadioPlayer.play();
     _setStation(station);
   }
 
@@ -73,6 +74,7 @@ class StationsController extends ChangeNotifier {
   void _refreshStations() {
     stations = [];
     stations.addAll(_internalStations);
+    notifyListeners();
   }
 
   void _setStation(Station station) async {
