@@ -22,7 +22,16 @@ dependencies:
   sqflite: ^2.0.2+1
   just_audio: ^0.9.27
   just_audio_windows: ^0.1.0
+  msix: ^3.6.2
 
 flutter:
   uses-material-design: true
   generate: true
+
+msix_config:
+  display_name: Radio Fi App
+  publisher_display_name: Radio Fi App
+  identity_name: radio.fi.flutterapp
+  msix_version: 1.0.0.0
+  logo_path: C:\src\personal\radio_fi_app\windows\runner\resources\app_icon.ico
+  capabilities: internetClient
