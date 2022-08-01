@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../services/controllers/player-controller.dart';
-import '../services/controllers/station-controller.dart';
+import '../services/station-manager.dart';
 
 class BottomActionWidget extends StatefulWidget {
   @override
@@ -9,7 +9,7 @@ class BottomActionWidget extends StatefulWidget {
 }
 
 class _BottomActionWidgetState extends State<BottomActionWidget> {
-  StationsController _stationsController = GetIt.instance<StationsController>();
+  StationManager _stationsController = GetIt.instance<StationManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
   double volume = 1.0;
 

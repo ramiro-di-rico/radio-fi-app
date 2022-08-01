@@ -4,7 +4,7 @@ import 'controls/bottom-actions.dart';
 import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
 import 'services/controllers/player-controller.dart';
-import 'services/controllers/station-controller.dart';
+import 'services/station-manager.dart';
 
 class MainScreen extends StatefulWidget {
   static const String id = 'main_screen';
@@ -14,18 +14,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  StationsController _stationsController = GetIt.instance<StationsController>();
+  StationManager _stationsController = GetIt.instance<StationManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
 
   @override
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
+    _player.addListener(updateStationsList);
   }
 
   @override
   void dispose() {
     _stationsController.removeListener(updateStationsList);
+    _player.removeListener(updateStationsList);
     super.dispose();
   }
 

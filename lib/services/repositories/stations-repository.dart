@@ -107,10 +107,9 @@ class StationsRepository implements StationStorage {
   Future<bool> isEmpty() async {
     try {
       var database = await _dbHelper.getDb();
-      var query = 'SELECT COUNT(*) FROM Stations ORDER BY lower(name) ASC';
-      List<Map> list = await database.rawQuery(query);
-      var result = list.map((e) => Station.fromJson(e)).toList();
-      return false;
+      int count = Sqflite.firstIntValue(
+          await database.rawQuery('SELECT COUNT(*) FROM Stations'));
+      return count == 0;
     } catch (e) {
       debugPrint(e);
       return true;

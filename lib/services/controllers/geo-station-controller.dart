@@ -42,6 +42,7 @@ class GeoStationsController extends ChangeNotifier
   Future initialize() async {
     var data = await getStationsByCountryCode(_countryCode);
     _internalStations.addAll(data);
+    _internalStations.sort((a, b) => b.star ? 1 : -1);
     await _stationStorage.bulkAdd(data);
     _refreshStations();
   }
@@ -75,6 +76,8 @@ class GeoStationsController extends ChangeNotifier
   void setFavorite(Station station, bool star) async {
     station.star = star;
     await _stationStorage.update(station);
+    stations.sort((a, b) => b.star ? 1 : -1);
+    notifyListeners();
   }
 
   void _refreshStations() {
@@ -85,4 +88,7 @@ class GeoStationsController extends ChangeNotifier
 
   @override
   int getDisplayedStationIndex() => -1;
+
+  @override
+  bool isSearching() => _editSearchText;
 }
