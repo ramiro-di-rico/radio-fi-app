@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:radio_fi/services/station-fetcher.dart';
 import '../repositories/configurations-repository.dart';
 import '../../data/station.dart';
 import 'package:http/http.dart' as http;
 
 import '../repositories/stations-repository.dart';
 
-class StationsService extends ChangeNotifier {
+class StationsService extends ChangeNotifier implements StationFetcher {
   List<Station> stations = [];
   List<String> countryCodes = [];
   List<String> starredStations = List.empty(growable: true);
@@ -36,7 +37,7 @@ class StationsService extends ChangeNotifier {
 
   Future _backgroundSync() async {
     stations.clear();
-    var endpointStations = await _getStations();
+    var endpointStations = await getStations();
     await _stationsRepository.bulkAdd(endpointStations);
     stations = await _stationsRepository.getStations(countryCode: _countryCode);
   }
@@ -51,7 +52,7 @@ class StationsService extends ChangeNotifier {
     await _stationsRepository.update(station);
   }
 
-  Future<List<Station>> _getStations() async {
+  Future<List<Station>> getStations() async {
     var queryParameters = {'Active': 'true', 'CountryCode': _countryCode};
 
     var response = await http.get(Uri.https(
