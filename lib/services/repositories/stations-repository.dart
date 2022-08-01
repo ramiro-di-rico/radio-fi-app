@@ -9,12 +9,25 @@ class StationsRepository implements StationStorage {
   static final columnId = 'id';
   DatabaseHelper _dbHelper = DatabaseHelper();
 
-  Future<List<Station>> getStations({String countryCode}) async {
+  Future<List<Station>> getStations() async {
     try {
       var database = await _dbHelper.getDb();
-      var query = countryCode == null
-          ? 'SELECT * FROM Stations ORDER BY lower(name) ASC'
-          : 'SELECT * FROM Stations WHERE countryCode = "$countryCode" ORDER BY lower(name) ASC';
+      var query = 'SELECT * FROM Stations ORDER BY lower(name) ASC';
+      List<Map> list = await database.rawQuery(query);
+      var result = list.map((e) => Station.fromJson(e)).toList();
+      return result;
+    } catch (e) {
+      debugPrint(e);
+      return List.empty();
+    }
+  }
+
+  @override
+  Future<List<Station>> getStationsByCountryCode(String countryCode) async {
+    try {
+      var database = await _dbHelper.getDb();
+      var query =
+          'SELECT * FROM Stations WHERE countryCode = "$countryCode" ORDER BY lower(name) ASC';
       List<Map> list = await database.rawQuery(query);
       var result = list.map((e) => Station.fromJson(e)).toList();
       return result;
@@ -89,10 +102,6 @@ class StationsRepository implements StationStorage {
       debugPrint(e);
     }
   }
-
-  @override
-  Future<List<Station>> getStationsByCountryCode(String countryCode) async =>
-      await getStations(countryCode: countryCode);
 
   @override
   Future<bool> isEmpty() async {

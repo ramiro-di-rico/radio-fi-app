@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/services/controllers/station-controller.dart';
-import 'package:radio_fi/services/controllers/sync-station-controller.dart';
+import '../services/controllers/player-controller.dart';
+import '../services/station-manager.dart';
 import 'picture-widget.dart';
 
 class StationsListView extends StatefulWidget {
@@ -12,8 +10,9 @@ class StationsListView extends StatefulWidget {
 }
 
 class _StationsListViewState extends State<StationsListView> {
-  StationsController _stationsController = GetIt.instance<StationsController>();
+  StationManager _stationsController = GetIt.instance<StationManager>();
   ScrollController _scrollController = ScrollController();
+  PlayerController _player = GetIt.instance<PlayerController>();
 
   @override
   void initState() {
@@ -36,7 +35,7 @@ class _StationsListViewState extends State<StationsListView> {
             itemCount: _stationsController.stations.length,
             itemBuilder: (context, index) {
               var station = _stationsController.stations[index];
-              var isPlaying = _stationsController.isPlayingStation(station);
+              var isPlaying = _player.isPlayingStation(station);
               return Card(
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
@@ -49,20 +48,17 @@ class _StationsListViewState extends State<StationsListView> {
                   title: Text(
                     station.name,
                   ),
-                  trailing: Platform.isAndroid || Platform.isIOS
-                      ? TextButton(
-                          onPressed: () {
-                            setState(() {
-                              var controller =
-                                  _stationsController as SyncStationsController;
-                              controller.setFavorite(station, !station.star);
-                            });
-                          },
-                          child: Icon(
-                              station.star ? Icons.star : Icons.star_outline))
-                      : null,
+                  trailing: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _stationsController.setFavorite(
+                              station, !station.star);
+                        });
+                      },
+                      child:
+                          Icon(station.star ? Icons.star : Icons.star_outline)),
                   onTap: () async {
-                    _stationsController.play(station);
+                    _player.play(station);
                   },
                 ),
               );

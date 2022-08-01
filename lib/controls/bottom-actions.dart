@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../services/controllers/player-controller.dart';
 import '../services/controllers/station-controller.dart';
 
 class BottomActionWidget extends StatefulWidget {
@@ -9,6 +10,7 @@ class BottomActionWidget extends StatefulWidget {
 
 class _BottomActionWidgetState extends State<BottomActionWidget> {
   StationsController _stationsController = GetIt.instance<StationsController>();
+  PlayerController _player = GetIt.instance<PlayerController>();
   double volume = 1.0;
 
   @override
@@ -26,7 +28,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var currentStation = _stationsController.getCurrentStation();
+    var currentStation = _player.getCurrentStation();
 
     if (currentStation == null) return Container();
 
@@ -37,7 +39,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
           Expanded(
             flex: 2,
             child: TextButton(
-              onPressed: () => _stationsController.displayCurrentStation(),
+              onPressed: () {}, //() => _player.displayCurrentStation(),
               child: Text(currentStation.name.length > 10
                   ? currentStation.name.substring(0, 10)
                   : currentStation.name),
@@ -56,7 +58,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
               child: Icon(Icons.stop),
               onPressed: () async {
                 setState(() {
-                  _stationsController.stop();
+                  _player.stop();
                 });
               },
             ),
@@ -73,13 +75,13 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
   }
 
   void updateVolume() {
-    volume = _stationsController.getVolume();
+    volume = _player.getVolume();
   }
 
   void setVolume(double vol) {
     setState(() {
       volume = vol;
-      _stationsController.changeVolume(vol);
+      _player.changeVolume(vol);
     });
   }
 }

@@ -23,7 +23,7 @@ class StationsService extends ChangeNotifier implements StationFetcher {
   Future syncStations() async {
     stations.clear();
     var savedStations =
-        await _stationsRepository.getStations(countryCode: _countryCode);
+        await _stationsRepository.getStationsByCountryCode(_countryCode);
     stations.addAll(savedStations.where((element) => element.star).toList());
     stations.addAll(savedStations.where((element) => !element.star).toList());
     var needSync = await _configurationsRepository.needSync();
@@ -39,7 +39,7 @@ class StationsService extends ChangeNotifier implements StationFetcher {
     stations.clear();
     var endpointStations = await getStations();
     await _stationsRepository.bulkAdd(endpointStations);
-    stations = await _stationsRepository.getStations(countryCode: _countryCode);
+    stations = await _stationsRepository.getStationsByCountryCode(_countryCode);
   }
 
   void star(Station station) async {
@@ -81,6 +81,11 @@ class StationsService extends ChangeNotifier implements StationFetcher {
 
   @override
   Future<List<Station>> getStationsByContryCode(String countryCode) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Station>> getStationsByCountryCode(String countryCode) {
     throw UnimplementedError();
   }
 }

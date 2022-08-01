@@ -1,10 +1,9 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/services/controllers/station-controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../services/controllers/sync-station-controller.dart';
+import '../services/controllers/geo-station-controller.dart';
 
 class CountryCodeSelector extends StatefulWidget {
   @override
@@ -12,12 +11,11 @@ class CountryCodeSelector extends StatefulWidget {
 }
 
 class _CountryCodeSelectorState extends State<CountryCodeSelector> {
-  SyncStationsController stationsController = GetIt.I<SyncStationsController>();
+  GeoStationsController stationsController = GetIt.I<GeoStationsController>();
   String selectedCountryCode = CountryCodes.detailsForLocale().alpha2Code;
 
   @override
   Widget build(BuildContext context) {
-    var countryCodes = stationsController.getCountryCodes();
     return Card(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -29,7 +27,7 @@ class _CountryCodeSelectorState extends State<CountryCodeSelector> {
               flex: 1,
               child: DropdownButton(
                 value: selectedCountryCode,
-                items: countryCodes
+                items: stationsController.countryCodes
                     .map((e) => DropdownMenuItem(child: Text(e), value: e))
                     .toList(),
                 onChanged: (value) {

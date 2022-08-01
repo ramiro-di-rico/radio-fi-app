@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'controls/bottom-actions.dart';
 import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
+import 'services/controllers/player-controller.dart';
 import 'services/controllers/station-controller.dart';
 
 class MainScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   StationsController _stationsController = GetIt.instance<StationsController>();
+  PlayerController _player = GetIt.instance<PlayerController>();
 
   @override
   void initState() {
@@ -29,7 +31,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var isPlaying = _stationsController.isPlaying();
     return Scaffold(
       appBar: RadioAppBar(),
       body: Center(
@@ -37,9 +38,9 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(child: StationsListView()),
           AnimatedOpacity(
             duration: Duration(milliseconds: 500),
-            opacity: isPlaying ? 1.0 : 0.0,
+            opacity: _player.isPlaying() ? 1.0 : 0.0,
             child: Baseline(
-              baseline: isPlaying ? 30 : 0,
+              baseline: _player.isPlaying() ? 30 : 0,
               baselineType: TextBaseline.alphabetic,
               child: BottomActionWidget(),
             ),
