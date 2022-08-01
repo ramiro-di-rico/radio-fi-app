@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:radio_fi/services/repositories/database-helper.dart';
+import 'package:radio_fi/services/station-storage.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../data/station.dart';
 
-class StationsRepository {
+class StationsRepository implements StationStorage {
   static final columnId = 'id';
   DatabaseHelper _dbHelper = DatabaseHelper();
 
@@ -88,4 +89,8 @@ class StationsRepository {
       debugPrint(e);
     }
   }
+
+  @override
+  Future<List<Station>> getStationsByCountryCode(String countryCode) async =>
+      await getStations(countryCode: countryCode);
 }

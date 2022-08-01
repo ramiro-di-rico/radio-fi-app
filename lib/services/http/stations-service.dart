@@ -78,4 +78,9 @@ class StationsService extends ChangeNotifier implements StationFetcher {
     List data = json.decode(response.body);
     countryCodes = data.map((e) => e.toString()).toList();
   }
+
+  @override
+  Future<List<Station>> getStationsByContryCode(String countryCode) {
+    throw UnimplementedError();
+  }
 }

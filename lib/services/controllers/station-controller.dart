@@ -2,10 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:radio_fi/services/station-fetcher.dart';
+import 'package:radio_fi/services/station-manager.dart';
+import 'package:radio_fi/services/station-player.dart';
 import '../../data/station.dart';
 import 'package:http/http.dart' as http;
 
-class StationsController extends ChangeNotifier {
+class StationsController extends ChangeNotifier
+    implements StationFetcher, StationManager, StationPlayer {
   AudioPlayer _flutterRadioPlayer = new AudioPlayer();
   Station _current;
   bool _isPlaying = false;
@@ -20,20 +24,20 @@ class StationsController extends ChangeNotifier {
     _load();
   }
 
-  void play(Station station) async {
+  Future play(Station station) async {
     await _flutterRadioPlayer.setUrl(station.uri);
     await _flutterRadioPlayer.setVolume(_volume);
     await _flutterRadioPlayer.play();
     _setStation(station);
   }
 
-  void stop() async {
+  Future stop() async {
     await _flutterRadioPlayer.stop();
     _volume = 1.0;
     _setStation(null);
   }
 
-  void changeVolume(double vol) async {
+  Future changeVolume(double vol) async {
     _volume = vol;
     await _flutterRadioPlayer.setVolume(_volume);
     notifyListeners();
@@ -54,7 +58,7 @@ class StationsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  search(String value) {
+  Iterable<Station> search(String value) {
     _searchText = value;
 
     if (_searchText.length > 0) {
@@ -67,6 +71,7 @@ class StationsController extends ChangeNotifier {
     }
 
     notifyListeners();
+    return stations;
   }
 
   bool isSearching() => _editSearchText;
@@ -95,12 +100,18 @@ class StationsController extends ChangeNotifier {
   }
 
   Future _load() async {
-    var data = await _getStations();
+    var data = await getStations();
     _internalStations.addAll(data);
     _refreshStations();
   }
 
-  Future<List<Station>> _getStations() async {
+  @override
+  Future<List<Station>> getStations() async {
+    return await getStationsByContryCode("");
+  }
+
+  @override
+  Future<List<Station>> getStationsByContryCode(String countryCode) async {
     var queryParameters = {'Active': 'true'};
 
     var response = await http.get(Uri.https(
@@ -114,4 +125,7 @@ class StationsController extends ChangeNotifier {
       return List.empty();
     }
   }
+
+  @override
+  void setFavorite(Station station, bool star) {}
 }
