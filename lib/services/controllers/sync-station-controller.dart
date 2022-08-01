@@ -51,14 +51,14 @@ class SyncStationsController extends StationsController {
   }
 
   @override
-  Future<List<Station>> getStations() {
-    // TODO: implement getStations
-    throw UnimplementedError();
+  Future<List<Station>> getStations() async {
+    return stations;
   }
 
   @override
-  Future<List<Station>> getStationsByContryCode(String countryCode) {
-    // TODO: implement getStationsByContryCode
-    throw UnimplementedError();
+  Future<List<Station>> getStationsByContryCode(String countryCode) async {
+    return stations
+        .where((element) => element.countryCode == countryCode)
+        .toList();
   }
 }

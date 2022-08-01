@@ -93,4 +93,18 @@ class StationsRepository implements StationStorage {
   @override
   Future<List<Station>> getStationsByCountryCode(String countryCode) async =>
       await getStations(countryCode: countryCode);
+
+  @override
+  Future<bool> isEmpty() async {
+    try {
+      var database = await _dbHelper.getDb();
+      var query = 'SELECT COUNT(*) FROM Stations ORDER BY lower(name) ASC';
+      List<Map> list = await database.rawQuery(query);
+      var result = list.map((e) => Station.fromJson(e)).toList();
+      return false;
+    } catch (e) {
+      debugPrint(e);
+      return true;
+    }
+  }
 }

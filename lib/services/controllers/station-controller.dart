@@ -5,6 +5,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:radio_fi/services/station-fetcher.dart';
 import 'package:radio_fi/services/station-manager.dart';
 import 'package:radio_fi/services/station-player.dart';
+import 'package:radio_fi/services/station-storage.dart';
 import '../../data/station.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,8 +20,10 @@ class StationsController extends ChangeNotifier
   List<Station> stations = [];
   List<Station> _internalStations = [];
   int _index = -1;
+  StationStorage _stationStorage;
 
-  StationsController() {
+  StationsController(StationStorage stationStorage) {
+    _stationStorage = stationStorage;
     _load();
   }
 
@@ -76,18 +79,6 @@ class StationsController extends ChangeNotifier
 
   bool isSearching() => _editSearchText;
 
-  void _refreshStations() {
-    stations = [];
-    stations.addAll(_internalStations);
-    notifyListeners();
-  }
-
-  void _setStation(Station station) async {
-    this._current = station;
-    this._isPlaying = this._current != null;
-    notifyListeners();
-  }
-
   void displayCurrentStation() {
     _index = stations.indexOf(_current);
     notifyListeners();
@@ -99,19 +90,20 @@ class StationsController extends ChangeNotifier
     return index;
   }
 
-  Future _load() async {
-    var data = await getStations();
-    _internalStations.addAll(data);
-    _refreshStations();
-  }
-
   @override
   Future<List<Station>> getStations() async {
-    return await getStationsByContryCode("");
+    var stations = await _stationStorage.isEmpty()
+        ? await getStationsByContryCode("")
+        : await _stationStorage.getStations();
+    return stations;
   }
 
   @override
   Future<List<Station>> getStationsByContryCode(String countryCode) async {
+    if (!await _stationStorage.isEmpty()) {
+      return await _stationStorage.getStationsByCountryCode(countryCode);
+    }
+
     var queryParameters = {'Active': 'true'};
 
     var response = await http.get(Uri.https(
@@ -127,5 +119,26 @@ class StationsController extends ChangeNotifier
   }
 
   @override
-  void setFavorite(Station station, bool star) {}
+  void setFavorite(Station station, bool star) async {
+    station.star = star;
+    await _stationStorage.update(station);
+  }
+
+  Future _load() async {
+    var data = await getStations();
+    _internalStations.addAll(data);
+    _refreshStations();
+  }
+
+  void _refreshStations() {
+    stations = [];
+    stations.addAll(_internalStations);
+    notifyListeners();
+  }
+
+  void _setStation(Station station) async {
+    this._current = station;
+    this._isPlaying = this._current != null;
+    notifyListeners();
+  }
 }
