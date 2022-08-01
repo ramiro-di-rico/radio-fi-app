@@ -12,7 +12,6 @@ dependencies:
   cupertino_icons: ^1.0.4
   http: ^0.13.4
   get_it: ^7.2.0
-  flutter_radio_player: ^1.1.0
   path_provider: ^2.0.9
   package_info: ^2.0.2
   country_codes: ^2.0.1
