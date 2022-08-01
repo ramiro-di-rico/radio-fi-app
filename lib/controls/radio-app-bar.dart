@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/data/station-controller.dart';
+import 'package:radio_fi/services/controllers/station-controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../info-scree.dart';
 

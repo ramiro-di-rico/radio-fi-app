@@ -1,29 +1,46 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
-import 'station.dart';
-import 'package:http/http.dart' as http;
+import 'package:radio_fi/services/controllers/station-controller.dart';
+import '../../data/station.dart';
+import '../http/stations-service.dart';
 
-class StationsController extends ChangeNotifier {
+class SyncStationsController extends ChangeNotifier
+    implements StationsController {
+  StationsService _stationsRepository = StationsService();
   AudioPlayer _flutterRadioPlayer = new AudioPlayer();
+  bool _initialized = false;
   Station _current;
   bool _isPlaying = false;
   String _searchText = '';
   bool _editSearchText = false;
   double _volume = 1.0;
   List<Station> stations = [];
-  List<Station> _internalStations = [];
   int _index = -1;
 
   StationsController() {
-    _load();
+    _stationsRepository.loadCountryCodes();
+    _stationsRepository.syncStations();
+    _stationsRepository.addListener(updateStationsList);
+  }
+
+  void updateStationsList() {
+    _refreshStations();
+    notifyListeners();
   }
 
   void play(Station station) async {
-    await _flutterRadioPlayer.setUrl(station.uri);
-    await _flutterRadioPlayer.setVolume(_volume);
-    await _flutterRadioPlayer.play();
+    if (!_initialized) {
+      /*
+      await _flutterRadioPlayer.init(
+          'Radio Fi', 'Live', station.uri, true.toString());
+          */
+      //_flutterRadioPlayer.setUrl(station.uri);
+      _initialized = true;
+    } else {
+      _flutterRadioPlayer.setUrl(station.uri);
+      await _flutterRadioPlayer.setVolume(_volume);
+    }
+
     _setStation(station);
   }
 
@@ -31,6 +48,7 @@ class StationsController extends ChangeNotifier {
     await _flutterRadioPlayer.stop();
     _volume = 1.0;
     _setStation(null);
+    _initialized = false;
   }
 
   void changeVolume(double vol) async {
@@ -58,7 +76,7 @@ class StationsController extends ChangeNotifier {
     _searchText = value;
 
     if (_searchText.length > 0) {
-      stations = _internalStations
+      stations = _stationsRepository.stations
           .where((element) =>
               element.name.toLowerCase().contains(_searchText.toLowerCase()))
           .toList();
@@ -69,12 +87,25 @@ class StationsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setFavorite(Station station, bool star) {
+    if (star) {
+      _stationsRepository.star(station);
+    } else {
+      _stationsRepository.unstar(station);
+    }
+    if (!isSearching()) {
+      _refreshStations();
+    }
+  }
+
   bool isSearching() => _editSearchText;
 
   void _refreshStations() {
     stations = [];
-    stations.addAll(_internalStations);
-    notifyListeners();
+    stations
+        .addAll(_stationsRepository.stations.where((element) => element.star));
+    stations
+        .addAll(_stationsRepository.stations.where((element) => !element.star));
   }
 
   void _setStation(Station station) async {
@@ -94,24 +125,9 @@ class StationsController extends ChangeNotifier {
     return index;
   }
 
-  Future _load() async {
-    var data = await _getStations();
-    _internalStations.addAll(data);
-    _refreshStations();
-  }
+  List<String> getCountryCodes() => _stationsRepository.countryCodes;
 
-  Future<List<Station>> _getStations() async {
-    var queryParameters = {'Active': 'true'};
-
-    var response = await http.get(Uri.https(
-        "ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
-    if (response.statusCode == 200) {
-      List data = json.decode(response.body);
-      var result = data.map((e) => Station.fromJson(e)).toList();
-      return result;
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-      return List.empty();
-    }
+  void changeCountryCode(String countryCode) {
+    _stationsRepository.changeCountryCode(countryCode);
   }
 }

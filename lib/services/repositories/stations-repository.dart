@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:radio_fi/data/database-helper.dart';
+import 'package:radio_fi/services/repositories/database-helper.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'station.dart';
+import '../../data/station.dart';
 
 class StationsRepository {
   static final columnId = 'id';

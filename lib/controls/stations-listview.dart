@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/data/station-controller.dart';
-import 'package:radio_fi/data/sync-station-controller.dart';
+import 'package:radio_fi/services/controllers/station-controller.dart';
+import 'package:radio_fi/services/controllers/sync-station-controller.dart';
 import 'picture-widget.dart';
 
 class StationsListView extends StatefulWidget {

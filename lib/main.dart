@@ -4,9 +4,9 @@ import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import 'data/sync-station-controller.dart';
+import 'services/controllers/sync-station-controller.dart';
 import 'myapp.dart';
-import 'data/station-controller.dart';
+import 'services/controllers/station-controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

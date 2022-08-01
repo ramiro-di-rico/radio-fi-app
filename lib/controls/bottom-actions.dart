@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../data/station-controller.dart';
+import '../services/controllers/station-controller.dart';
 
 class BottomActionWidget extends StatefulWidget {
   @override

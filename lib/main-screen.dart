@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'controls/bottom-actions.dart';
 import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
-import 'data/station-controller.dart';
+import 'services/controllers/station-controller.dart';
 
 class MainScreen extends StatefulWidget {
   static const String id = 'main_screen';

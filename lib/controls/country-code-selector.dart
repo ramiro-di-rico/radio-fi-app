@@ -1,10 +1,10 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/data/station-controller.dart';
+import 'package:radio_fi/services/controllers/station-controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../data/sync-station-controller.dart';
+import '../services/controllers/sync-station-controller.dart';
 
 class CountryCodeSelector extends StatefulWidget {
   @override

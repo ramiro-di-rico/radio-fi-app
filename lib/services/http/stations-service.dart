@@ -3,11 +3,11 @@ import 'dart:io';
 
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
-import 'configurations-repository.dart';
-import 'station.dart';
+import '../repositories/configurations-repository.dart';
+import '../../data/station.dart';
 import 'package:http/http.dart' as http;
 
-import 'stations-repository.dart';
+import '../repositories/stations-repository.dart';
 
 class StationsService extends ChangeNotifier {
   List<Station> stations = [];
