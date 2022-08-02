@@ -30,10 +30,10 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
 
   @override
   Future play(Station station) async {
+    _setStation(station);
     await _flutterRadioPlayer.setUrl(station.uri);
     await _flutterRadioPlayer.setVolume(_volume);
     await _flutterRadioPlayer.play();
-    _setStation(station);
   }
 
   @override
