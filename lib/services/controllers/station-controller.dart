@@ -16,6 +16,7 @@ class StationsController extends ChangeNotifier
   List<Station> _internalStations = [];
   int _index = -1;
   StationStorage _stationStorage;
+  bool _initialized = false;
 
   StationsController(StationStorage stationStorage) {
     _stationStorage = stationStorage;
@@ -54,7 +55,7 @@ class StationsController extends ChangeNotifier
 
   @override
   Future<List<Station>> getStations() async {
-    var stations = await _stationStorage.isEmpty()
+    var stations = await _stationStorage.isEmpty() || !_initialized
         ? await _httpStationsService.getStations()
         : await _stationStorage.getStations();
     return stations;
@@ -71,6 +72,7 @@ class StationsController extends ChangeNotifier
     var data = await getStations();
     _internalStations.addAll(data);
     await _stationStorage.bulkAdd(data);
+    _initialized = true;
     _refreshStations();
   }
 

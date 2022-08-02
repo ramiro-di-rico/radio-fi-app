@@ -17,6 +17,7 @@ class GeoStationsController extends ChangeNotifier
   List<String> countryCodes = [];
   String _searchText = '';
   bool _editSearchText = false;
+  bool _initialized = false;
 
   GeoStationsController(StationStorage stationStorage) {
     _stationStorage = stationStorage;
@@ -31,7 +32,7 @@ class GeoStationsController extends ChangeNotifier
 
   @override
   Future<List<Station>> getStationsByCountryCode(String countryCode) async {
-    if (!await _stationStorage.isEmpty()) {
+    if (!await _stationStorage.isEmpty() || _initialized) {
       return await _stationStorage.getStationsByCountryCode(countryCode);
     }
 
@@ -44,6 +45,7 @@ class GeoStationsController extends ChangeNotifier
     _internalStations.addAll(data);
     _internalStations.sort((a, b) => b.star ? 1 : -1);
     await _stationStorage.bulkAdd(data);
+    _initialized = true;
     _refreshStations();
   }
 
