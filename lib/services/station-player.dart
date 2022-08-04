@@ -7,5 +7,6 @@ abstract class StationPlayer {
   double getVolume();
   bool isPlaying();
   bool isPlayingStation(Station station);
+  bool isLoading();
   Station getCurrentStation();
 }
