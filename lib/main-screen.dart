@@ -35,20 +35,18 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RadioAppBar(),
-      body: Center(
-        child: Column(children: [
-          Expanded(child: StationsListView()),
-          AnimatedOpacity(
-            duration: Duration(milliseconds: 500),
-            opacity: _player.isPlaying() ? 1.0 : 0.0,
-            child: Baseline(
-              baseline: _player.isPlaying() ? 30 : 0,
-              baselineType: TextBaseline.alphabetic,
-              child: BottomActionWidget(),
-            ),
-          )
-        ]),
-      ),
+      body: Column(children: [
+        Expanded(child: StationsListView()),
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 500),
+          opacity: _player.isPlaying() ? 1.0 : 0.0,
+          child: Baseline(
+            baseline: _player.isPlaying() ? 30 : 0,
+            baselineType: TextBaseline.alphabetic,
+            child: BottomActionWidget(),
+          ),
+        )
+      ]),
     );
   }
 

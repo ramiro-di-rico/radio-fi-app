@@ -39,7 +39,6 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
   @override
   Future stop() async {
     await _flutterRadioPlayer.stop();
-    _volume = 1.0;
     _setStation(null);
   }
 

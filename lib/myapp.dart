@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
         themeMode: ThemeMode.system,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
