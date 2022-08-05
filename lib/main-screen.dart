@@ -16,6 +16,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   StationManager _stationsController = GetIt.instance<StationManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
+  bool _displayBottomBar = false;
 
   @override
   void initState() {
@@ -39,9 +40,9 @@ class _MainScreenState extends State<MainScreen> {
         Expanded(child: StationsListView()),
         AnimatedOpacity(
           duration: Duration(milliseconds: 500),
-          opacity: _player.isPlaying() ? 1.0 : 0.0,
+          opacity: _displayBottomBar ? 1.0 : 0.0,
           child: Baseline(
-            baseline: _player.isPlaying() ? 30 : 0,
+            baseline: _displayBottomBar ? 30 : 0,
             baselineType: TextBaseline.alphabetic,
             child: BottomActionWidget(),
           ),
@@ -51,6 +52,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void updateStationsList() {
-    setState(() {});
+    setState(() {
+      _displayBottomBar = _player.isPlaying() && !_player.isLoading();
+      print(_displayBottomBar);
+    });
   }
 }
