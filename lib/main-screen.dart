@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'controls/bottom-actions.dart';
@@ -17,18 +20,25 @@ class _MainScreenState extends State<MainScreen> {
   StationManager _stationsController = GetIt.instance<StationManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _displayBottomBar = false;
+  ConnectivityResult connectivityResult = ConnectivityResult.none;
+  StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   @override
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
     _player.addListener(updateStationsList);
+    _connectivitySubscription =
+        Connectivity().onConnectivityChanged.listen((event) {
+      connectivityResult = event;
+    });
   }
 
   @override
   void dispose() {
     _stationsController.removeListener(updateStationsList);
     _player.removeListener(updateStationsList);
+    _connectivitySubscription.cancel();
     super.dispose();
   }
 
