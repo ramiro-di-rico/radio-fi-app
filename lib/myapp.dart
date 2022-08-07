@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'info-scree.dart';
 import 'main-screen.dart';
@@ -13,7 +12,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
         themeMode: ThemeMode.system,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),

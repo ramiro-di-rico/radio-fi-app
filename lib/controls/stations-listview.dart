@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/data/station-controller.dart';
+import '../services/controllers/player-controller.dart';
+import '../services/station-manager.dart';
 import 'picture-widget.dart';
 
 class StationsListView extends StatefulWidget {
@@ -9,19 +10,29 @@ class StationsListView extends StatefulWidget {
 }
 
 class _StationsListViewState extends State<StationsListView> {
-  StationsController _stationsController = GetIt.instance<StationsController>();
+  StationManager _stationsController = GetIt.instance<StationManager>();
   ScrollController _scrollController = ScrollController();
+  PlayerController _player = GetIt.instance<PlayerController>();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _stationsController.addListener(updateStationsList);
+    _player.addListener(updateIsLoading);
   }
 
   @override
   void dispose() {
     _stationsController.removeListener(updateStationsList);
+    _player.removeListener(updateIsLoading);
     super.dispose();
+  }
+
+  void updateIsLoading() {
+    setState(() {
+      _isLoading = _player.isLoading();
+    });
   }
 
   @override
@@ -33,7 +44,7 @@ class _StationsListViewState extends State<StationsListView> {
             itemCount: _stationsController.stations.length,
             itemBuilder: (context, index) {
               var station = _stationsController.stations[index];
-              var isPlaying = _stationsController.isPlayingStation(station);
+              var isPlaying = _player.isPlayingStation(station);
               return Card(
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
@@ -42,7 +53,10 @@ class _StationsListViewState extends State<StationsListView> {
                             isPlaying ? Colors.blueAccent : Colors.transparent),
                     borderRadius: BorderRadius.circular(20)),
                 child: ListTile(
-                  leading: PictureWidget(station.imageUrl),
+                  leading:
+                      _isLoading && station.id == _player.getCurrentStation().id
+                          ? CircularProgressIndicator()
+                          : PictureWidget(station.imageUrl),
                   title: Text(
                     station.name,
                   ),
@@ -56,7 +70,7 @@ class _StationsListViewState extends State<StationsListView> {
                       child:
                           Icon(station.star ? Icons.star : Icons.star_outline)),
                   onTap: () async {
-                    _stationsController.play(station);
+                    _player.play(station);
                   },
                 ),
               );

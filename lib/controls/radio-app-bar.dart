@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/data/station-controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../info-scree.dart';
+import '../services/station-manager.dart';
 
 class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
   final AppBar _appBar = new AppBar();
@@ -15,7 +15,7 @@ class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _RadioAppBarState extends State<RadioAppBar> {
-  StationsController _stationsController = GetIt.instance<StationsController>();
+  StationManager _stationsController = GetIt.instance<StationManager>();
   String currentText = '';
   Widget searchBarIconButton;
   FocusNode searchBarFocusNode;
