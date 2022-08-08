@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   StationManager _stationsController = GetIt.instance<StationManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _displayBottomBar = false;
-  ConnectivityResult connectivityResult = ConnectivityResult.none;
+  bool _isConnected = true;
   StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   @override
@@ -30,7 +30,9 @@ class _MainScreenState extends State<MainScreen> {
     _player.addListener(updateStationsList);
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((event) {
-      connectivityResult = event;
+      _isConnected = event == ConnectivityResult.wifi ||
+          event == ConnectivityResult.mobile ||
+          event == ConnectivityResult.ethernet;
     });
   }
 
@@ -46,25 +48,28 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RadioAppBar(),
-      body: Column(children: [
-        Expanded(child: StationsListView()),
-        AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
-          opacity: _displayBottomBar ? 1.0 : 0.0,
-          child: Baseline(
-            baseline: _displayBottomBar ? 30 : 0,
-            baselineType: TextBaseline.alphabetic,
-            child: BottomActionWidget(),
-          ),
-        )
-      ]),
+      body: _isConnected
+          ? Column(children: [
+              Expanded(child: StationsListView()),
+              AnimatedOpacity(
+                duration: Duration(milliseconds: 500),
+                opacity: _displayBottomBar ? 1.0 : 0.0,
+                child: Baseline(
+                  baseline: _displayBottomBar ? 30 : 0,
+                  baselineType: TextBaseline.alphabetic,
+                  child: BottomActionWidget(),
+                ),
+              )
+            ])
+          : Center(
+              child: Text('No Internet connection detected.'),
+            ),
     );
   }
 
   void updateStationsList() {
     setState(() {
       _displayBottomBar = _player.isPlaying() && !_player.isLoading();
-      print(_displayBottomBar);
     });
   }
 }
