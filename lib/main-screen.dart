@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
               title: Text(AppLocalizations.of(context).appTitle),
             ),
             body: Center(
-              child: Text('No Internet connection detected.'),
+              child: Text(AppLocalizations.of(context).noConnection),
             ),
           );
   }
