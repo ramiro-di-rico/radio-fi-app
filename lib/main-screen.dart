@@ -8,6 +8,7 @@ import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
 import 'services/controllers/player-controller.dart';
 import 'services/station-manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainScreen extends StatefulWidget {
   static const String id = 'main_screen';
@@ -48,10 +49,10 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: RadioAppBar(),
-      body: _isConnected
-          ? Column(children: [
+    return _isConnected
+        ? Scaffold(
+            appBar: RadioAppBar(),
+            body: Column(children: [
               Expanded(child: StationsListView()),
               AnimatedOpacity(
                 duration: Duration(milliseconds: 500),
@@ -62,11 +63,16 @@ class _MainScreenState extends State<MainScreen> {
                   child: BottomActionWidget(),
                 ),
               )
-            ])
-          : Center(
+            ]),
+          )
+        : Scaffold(
+            appBar: AppBar(
+              title: Text(AppLocalizations.of(context).appTitle),
+            ),
+            body: Center(
               child: Text('No Internet connection detected.'),
             ),
-    );
+          );
   }
 
   void updateStationsList() {
