@@ -9,5 +9,6 @@
   "country": "Country Code",
   "helloWorld": "Hello World!",
   "package": "Package",
-  "version": "Version"
+  "version": "Version",
+  "noConnection":"No Internet connection detected."
 }

@@ -6,5 +6,6 @@
   "country": "Codigo Pais",
   "helloWorld": "Hola Mundo!",
   "package": "Paquete",
-  "version": "Version"
+  "version": "Version",
+  "noConnection":"No hay conexion a internet."
 }
