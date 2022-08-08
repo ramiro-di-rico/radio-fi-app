@@ -30,9 +30,11 @@ class _MainScreenState extends State<MainScreen> {
     _player.addListener(updateStationsList);
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((event) {
-      _isConnected = event == ConnectivityResult.wifi ||
-          event == ConnectivityResult.mobile ||
-          event == ConnectivityResult.ethernet;
+      setState(() {
+        _isConnected = event == ConnectivityResult.wifi ||
+            event == ConnectivityResult.mobile ||
+            event == ConnectivityResult.ethernet;
+      });
     });
   }
 
