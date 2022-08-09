@@ -13,5 +13,14 @@ class Station {
         json['countryCode']);
   }
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'uri': uri,
+        'imageUrl': imageUrl,
+        'countryCode': countryCode,
+        'star': star ? 1 : 0
+      };
+
   static bool parseBool(int value) => value == 1;
 }
