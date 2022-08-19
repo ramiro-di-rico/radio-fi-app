@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:radio_fi/data/station.dart';
@@ -5,7 +7,8 @@ import 'package:radio_fi/services/station-player.dart';
 
 class PlayerController extends ChangeNotifier implements StationPlayer {
   AudioPlayer _flutterRadioPlayer = new AudioPlayer();
-  Station _current;
+  StreamSubscription<PlayerState>? playerStateSubscription;
+  Station? _current;
   bool _isPlaying = false;
   double _volume = 1.0;
   bool _isLoading = false;
@@ -18,7 +21,7 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
   }
 
   @override
-  Station getCurrentStation() => _current;
+  Station getCurrentStation() => _current!;
 
   @override
   double getVolume() => _volume;
@@ -40,6 +43,8 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
       await _flutterRadioPlayer.setUrl(station.uri);
       await _flutterRadioPlayer.setVolume(_volume);
       _flutterRadioPlayer.play();
+      playerStateSubscription =
+          _flutterRadioPlayer.playerStateStream.listen(_onPlayerStateChanged);
     } catch (e) {
     } finally {
       _notifyLoading(false);
@@ -49,8 +54,9 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
   @override
   Future stop() async {
     await _flutterRadioPlayer.stop();
-    _setStation(null);
+    _setStation(null as Station);
     _notifyLoading(false);
+    playerStateSubscription?.cancel();
   }
 
   void _setStation(Station station) async {
@@ -61,5 +67,9 @@ class PlayerController extends ChangeNotifier implements StationPlayer {
   void _notifyLoading(bool loading) {
     _isLoading = loading;
     notifyListeners();
+  }
+
+  void _onPlayerStateChanged(PlayerState state) {
+    print(state);
   }
 }

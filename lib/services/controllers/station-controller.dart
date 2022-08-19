@@ -15,7 +15,7 @@ class StationsController extends ChangeNotifier
   @protected
   List<Station> _internalStations = [];
   int _index = -1;
-  StationStorage _stationStorage;
+  late StationStorage _stationStorage;
   bool _initialized = false;
 
   StationsController(StationStorage stationStorage) {

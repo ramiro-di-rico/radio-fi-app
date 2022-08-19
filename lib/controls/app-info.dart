@@ -46,7 +46,7 @@ class _AppInfoWidgetState extends State<AppInfoWidget> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .applicationInformation,
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
@@ -54,23 +54,26 @@ class _AppInfoWidgetState extends State<AppInfoWidget> {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text(AppLocalizations.of(context).appName +
-                                  ": $appName"),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text(AppLocalizations.of(context).package +
-                                  ": $packageName"),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: Text(AppLocalizations.of(context).version +
-                                  ": $version"),
+                              child: Text(
+                                  AppLocalizations.of(context)!.appName +
+                                      ": $appName"),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 5),
                               child: Text(
-                                  AppLocalizations.of(context).buildNumber +
+                                  AppLocalizations.of(context)!.package +
+                                      ": $packageName"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text(
+                                  AppLocalizations.of(context)!.version +
+                                      ": $version"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text(
+                                  AppLocalizations.of(context)!.buildNumber +
                                       ": $buildNumber"),
                             )
                           ],

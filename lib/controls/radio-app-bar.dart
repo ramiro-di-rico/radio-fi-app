@@ -17,9 +17,9 @@ class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _RadioAppBarState extends State<RadioAppBar> {
   StationManager _stationsController = GetIt.instance<StationManager>();
   String currentText = '';
-  Widget searchBarIconButton;
-  FocusNode searchBarFocusNode;
-  TextEditingController searchController;
+  late Widget searchBarIconButton;
+  late FocusNode searchBarFocusNode;
+  late TextEditingController searchController;
 
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
     return [
       Row(
         children: [
-          Text(AppLocalizations.of(context).appTitle),
+          Text(AppLocalizations.of(context)!.appTitle),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, InfoScreen.id);

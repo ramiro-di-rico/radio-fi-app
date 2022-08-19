@@ -28,9 +28,8 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_player.isPlaying()) return Container();
     var currentStation = _player.getCurrentStation();
-
-    if (currentStation == null) return Container();
 
     return Container(
       color: Theme.of(context).bottomAppBarColor,

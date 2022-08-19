@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _displayBottomBar = false;
   bool _isConnected = true;
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  StreamSubscription<ConnectivityResult>? _connectivitySubscription;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
   void dispose() {
     _stationsController.removeListener(updateStationsList);
     _player.removeListener(updateStationsList);
-    _connectivitySubscription.cancel();
+    _connectivitySubscription?.cancel();
     super.dispose();
   }
 
@@ -67,10 +67,10 @@ class _MainScreenState extends State<MainScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              title: Text(AppLocalizations.of(context).appTitle),
+              title: Text(AppLocalizations.of(context)!.appTitle),
             ),
             body: Center(
-              child: Text(AppLocalizations.of(context).noConnection),
+              child: Text(AppLocalizations.of(context)!.noConnection),
             ),
           );
   }

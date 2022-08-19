@@ -6,7 +6,7 @@ class Station {
   Station(
       this.id, this.name, this.uri, this.imageUrl, this.star, this.countryCode);
 
-  factory Station.fromJson(Map<String, dynamic> json) {
+  factory Station.fromJson(Map<dynamic, dynamic> json) {
     var id = int.parse(json['id'].toString());
     var star = json.containsKey('star') ? parseBool(json['star']) : false;
     return Station(id, json['name'], json['uri'], json['imageUrl'], star,

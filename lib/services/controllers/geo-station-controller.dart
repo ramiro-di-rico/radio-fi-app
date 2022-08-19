@@ -9,9 +9,9 @@ import '../station-manager.dart';
 
 class GeoStationsController extends ChangeNotifier
     implements GeoStationFetcher, StationManager, Initializer {
-  String _countryCode = CountryCodes.detailsForLocale().alpha2Code;
+  String? _countryCode = CountryCodes.detailsForLocale().alpha2Code;
   HttpStationsService _httpStationsService = HttpStationsService();
-  StationStorage _stationStorage;
+  late StationStorage _stationStorage;
   List<Station> _internalStations = [];
   List<Station> stations = [];
   List<String> countryCodes = [];
@@ -41,7 +41,7 @@ class GeoStationsController extends ChangeNotifier
 
   @override
   Future initialize() async {
-    var data = await getStationsByCountryCode(_countryCode);
+    var data = await getStationsByCountryCode(_countryCode!);
     _internalStations.addAll(data);
     _internalStations.sort((a, b) => b.star ? 1 : -1);
     await _stationStorage.bulkAdd(data);

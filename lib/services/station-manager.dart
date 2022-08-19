@@ -7,6 +7,6 @@ abstract class StationManager extends ChangeNotifier {
   bool isSearching();
   void setFavorite(Station station, bool star);
   void changeTextEditState(bool value);
-  List<Station> stations;
+  late List<Station> stations;
   int getDisplayedStationIndex();
 }

@@ -13,11 +13,11 @@ class StationsRepository implements StationStorage {
     try {
       var database = await _dbHelper.getDb();
       var query = 'SELECT * FROM Stations ORDER BY lower(name) ASC';
-      List<Map> list = await database.rawQuery(query);
+      List<Map> list = await database!.rawQuery(query);
       var result = list.map((e) => Station.fromJson(e)).toList();
       return result;
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
       return List.empty();
     }
   }
@@ -28,11 +28,11 @@ class StationsRepository implements StationStorage {
       var database = await _dbHelper.getDb();
       var query =
           'SELECT * FROM Stations WHERE countryCode = "$countryCode" ORDER BY lower(name) ASC';
-      List<Map> list = await database.rawQuery(query);
+      List<Map> list = await database!.rawQuery(query);
       var result = list.map((e) => Station.fromJson(e)).toList();
       return result;
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
       return List.empty();
     }
   }
@@ -48,11 +48,11 @@ class StationsRepository implements StationStorage {
         'countryCode': station.countryCode
       };
 
-      int updateCount = await database.update('Stations', values,
+      int updateCount = await database!.update('Stations', values,
           where: '$columnId = ?', whereArgs: [station.id]);
       debugPrint('rows updated $updateCount');
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -68,10 +68,10 @@ class StationsRepository implements StationStorage {
         'countryCode': station.countryCode
       };
 
-      await database.insert('Stations', values,
+      await database!.insert('Stations', values,
           conflictAlgorithm: ConflictAlgorithm.replace);
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -79,12 +79,11 @@ class StationsRepository implements StationStorage {
     try {
       var storedStations = await getStations();
       var database = await _dbHelper.getDb();
-      var batch = database.batch();
+      var batch = database!.batch();
       for (var i = 0; i < stations.length; i++) {
         var station = stations[i];
-        var storedStation = storedStations.firstWhere(
-            (element) => element.id == station.id,
-            orElse: () => null);
+        var storedStation =
+            storedStations.firstWhere((element) => element.id == station.id);
         var values = {
           'id': station.id,
           'name': station.name,
@@ -99,7 +98,7 @@ class StationsRepository implements StationStorage {
       }
       batch.commit();
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -107,11 +106,11 @@ class StationsRepository implements StationStorage {
   Future<bool> isEmpty() async {
     try {
       var database = await _dbHelper.getDb();
-      int count = Sqflite.firstIntValue(
-          await database.rawQuery('SELECT COUNT(*) FROM Stations'));
+      int? count = Sqflite.firstIntValue(
+          await database!.rawQuery('SELECT COUNT(*) FROM Stations'));
       return count == 0;
     } catch (e) {
-      debugPrint(e);
+      debugPrint(e.toString());
       return true;
     }
   }

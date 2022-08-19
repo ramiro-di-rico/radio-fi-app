@@ -6,15 +6,15 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseHelper {
   String databasesPath = '';
   String path = '';
-  Future<Database> _db;
+  Future<Database>? _db;
   static final columnId = 'id';
 
-  Future<Database> getDb() {
+  Future<Database>? getDb() {
     _db ??= _initDb();
     return _db;
   }
 
-  Future<Database> _initDb() async {
+  Future<Database>? _initDb() async {
     databasesPath = await getDatabasesPath();
 
     try {
@@ -31,8 +31,9 @@ class DatabaseHelper {
       });
       return db;
     } catch (_) {
-      debugPrint(_);
-      return null;
+      //debugPrint(_);
+      throw _;
+      //return Future.value(null);
     }
   }
 }

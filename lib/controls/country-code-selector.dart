@@ -12,7 +12,7 @@ class CountryCodeSelector extends StatefulWidget {
 
 class _CountryCodeSelectorState extends State<CountryCodeSelector> {
   GeoStationsController stationsController = GetIt.I<GeoStationsController>();
-  String selectedCountryCode = CountryCodes.detailsForLocale().alpha2Code;
+  String? selectedCountryCode = CountryCodes.detailsForLocale().alpha2Code;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _CountryCodeSelectorState extends State<CountryCodeSelector> {
         child: Row(
           children: [
             Expanded(
-                child: Text(AppLocalizations.of(context).country), flex: 1),
+                child: Text(AppLocalizations.of(context)!.country), flex: 1),
             Expanded(
               flex: 1,
               child: DropdownButton(
@@ -32,8 +32,8 @@ class _CountryCodeSelectorState extends State<CountryCodeSelector> {
                     .toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedCountryCode = value;
-                    stationsController.changeCountryCode(value);
+                    selectedCountryCode = value?.toString();
+                    stationsController.changeCountryCode(value.toString());
                   });
                 },
               ),
