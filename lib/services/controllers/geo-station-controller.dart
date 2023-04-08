@@ -9,7 +9,7 @@ import '../station-manager.dart';
 
 class GeoStationsController extends ChangeNotifier
     implements GeoStationFetcher, StationManager, Initializer {
-  String? _countryCode = CountryCodes.detailsForLocale().alpha2Code;
+  String? _countryCode = "AR"; //CountryCodes.detailsForLocale().alpha2Code;
   HttpStationsService _httpStationsService = HttpStationsService();
   late StationStorage _stationStorage;
   List<Station> _internalStations = [];
