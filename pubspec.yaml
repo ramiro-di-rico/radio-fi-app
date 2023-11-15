@@ -17,12 +17,13 @@ dependencies:
   country_codes: ^2.0.1
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.1
   sqflite: ^2.0.2+1
   just_audio: ^0.9.27
   just_audio_windows: ^0.1.0
   msix: ^3.6.2
   connectivity_plus: ^2.3.6
+  supabase_flutter: ^1.10.25
 
 flutter:
   uses-material-design: true
