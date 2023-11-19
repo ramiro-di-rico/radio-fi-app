@@ -13,5 +13,12 @@ class Station {
         json['countryCode']);
   }
 
+  factory Station.fromSupabase(Map<dynamic, dynamic> row){
+    var id = int.parse(row['Id'].toString());
+    var star = row.containsKey('Star') ? parseBool(row['Star']) : false;
+    return Station(id, row['Name'] ?? '', row['Uri'] ?? '', row['ImageUrl'] ?? '', star,
+        row['CountryCode'] ?? '');
+  }
+
   static bool parseBool(int value) => value == 1;
 }

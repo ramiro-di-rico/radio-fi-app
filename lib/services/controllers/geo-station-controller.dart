@@ -4,6 +4,7 @@ import 'package:radio_fi/data/station.dart';
 import 'package:radio_fi/services/station-storage.dart';
 import '../http/http-stations-service.dart';
 import '../initializer.dart';
+import '../repositories/supabase-stations-repository.dart';
 import '../station-fetcher.dart';
 import '../station-manager.dart';
 
@@ -11,6 +12,8 @@ class GeoStationsController extends ChangeNotifier
     implements GeoStationFetcher, StationManager, Initializer {
   String? _countryCode = "AR"; //CountryCodes.detailsForLocale().alpha2Code;
   HttpStationsService _httpStationsService = HttpStationsService();
+  SupabaseStationsRepository _supabaseStationsRepository =
+  SupabaseStationsRepository();
   late StationStorage _stationStorage;
   List<Station> _internalStations = [];
   List<Station> stations = [];
@@ -36,7 +39,7 @@ class GeoStationsController extends ChangeNotifier
       return await _stationStorage.getStationsByCountryCode(countryCode);
     }
 
-    return await _httpStationsService.getStationsByCountryCode(countryCode);
+    return await _supabaseStationsRepository.getStationsByCountryCode(countryCode);
   }
 
   @override
