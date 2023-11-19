@@ -9,4 +9,5 @@ abstract class StationManager extends ChangeNotifier {
   void changeTextEditState(bool value);
   late List<Station> stations;
   int getDisplayedStationIndex();
+  String error = "";
 }

@@ -21,6 +21,7 @@ class GeoStationsController extends ChangeNotifier
   String _searchText = '';
   bool _editSearchText = false;
   bool _initialized = false;
+  String error = '';
 
   GeoStationsController(StationStorage stationStorage) {
     _stationStorage = stationStorage;
@@ -39,7 +40,12 @@ class GeoStationsController extends ChangeNotifier
       return await _stationStorage.getStationsByCountryCode(countryCode);
     }
 
-    return await _supabaseStationsRepository.getStationsByCountryCode(countryCode);
+    try {
+      return await _supabaseStationsRepository.getStationsByCountryCode(countryCode);
+    } on Exception catch (e) {
+      error = e.toString();
+      return [];
+    }
   }
 
   @override

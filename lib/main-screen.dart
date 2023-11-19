@@ -78,6 +78,13 @@ class _MainScreenState extends State<MainScreen> {
   void updateStationsList() {
     setState(() {
       _displayBottomBar = _player.isPlaying() && !_player.isLoading();
+
+      if(_stationsController.error != ""){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(_stationsController.error),
+          duration: Duration(seconds: 25),
+        ));
+      }
     });
   }
 }
