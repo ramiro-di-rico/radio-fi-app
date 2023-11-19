@@ -41,7 +41,7 @@ class GeoStationsController extends ChangeNotifier
     }
 
     try {
-      return await _httpStationsService.getStationsByCountryCode(countryCode);
+      return await _supabaseStationsRepository.getStationsByCountryCode(countryCode);
     } on Exception catch (e) {
       error = e.toString();
       return [];
