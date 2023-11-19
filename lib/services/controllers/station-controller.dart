@@ -20,6 +20,7 @@ class StationsController extends ChangeNotifier
   int _index = -1;
   late StationStorage _stationStorage;
   bool _initialized = false;
+  String error = "";
 
   StationsController(StationStorage stationStorage) {
     _stationStorage = stationStorage;
