@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:radio_fi/secret_keys.dart';
 import 'controls/bottom-actions.dart';
 import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
@@ -50,16 +49,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: RadioAppBar(),
-      body: Column(children: [
-        Expanded(child: const Text(SecretKeys.supabaseAuth)),
-        Expanded(child: const Text(SecretKeys.supabaseUrl)),
-      ])
-    );
-
-    /*
     return _isConnected
         ? Scaffold(
             appBar: RadioAppBar(),
@@ -84,7 +73,6 @@ class _MainScreenState extends State<MainScreen> {
               child: Text(AppLocalizations.of(context)!.noConnection),
             ),
           );
-     */
   }
 
   void updateStationsList() {
