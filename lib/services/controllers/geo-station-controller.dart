@@ -102,4 +102,9 @@ class GeoStationsController extends ChangeNotifier
 
   @override
   bool isSearching() => _editSearchText;
+
+  @override
+  void SetActiveFiltering(bool active) {
+    _supabaseStationsRepository.SetActiveFiltering(active);
+  }
 }

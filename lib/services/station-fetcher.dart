@@ -6,4 +6,5 @@ abstract class StationFetcher {
 
 abstract class GeoStationFetcher {
   Future<List<Station>> getStationsByCountryCode(String countryCode);
+  void SetActiveFiltering(bool active);
 }

@@ -4,6 +4,7 @@ import '../../main.dart';
 import '../station-fetcher.dart';
 
 class SupabaseStationsRepository implements StationFetcher, GeoStationFetcher {
+  bool _activeFiltering = true;
 
   @override
   Future<List<Station>> getStations() async {
@@ -15,10 +16,16 @@ class SupabaseStationsRepository implements StationFetcher, GeoStationFetcher {
     List<dynamic> data = await supabase
         .from('Stations')
         .select('*')
-        .eq('CountryCode', countryCode);
+        .eq('CountryCode', countryCode)
+        .eq('Active', _activeFiltering);
 
     var result = data.map((e) => Station.fromSupabase(e)).toList();
 
     return result;
+  }
+
+  @override
+  void SetActiveFiltering(bool active) {
+    _activeFiltering = active;
   }
 }

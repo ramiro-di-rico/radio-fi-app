@@ -24,4 +24,9 @@ class InMemoryStationsRepository implements StationStorage {
 
   @override
   Future update(Station station) async {}
+
+  @override
+  void SetActiveFiltering(bool active) {
+    // TODO: implement SetActiveFiltering
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'controls/app-configuration.dart';
 import 'controls/app-info.dart';
 import 'controls/country-code-selector.dart';
 
@@ -21,7 +22,7 @@ class _InfoScreenState extends State<InfoScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              CountryCodeSelector(),
+              AppConfiguration(),
               AppInfoWidget(),
             ],
           ),

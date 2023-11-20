@@ -31,4 +31,9 @@ class HttpStationsService implements StationFetcher, GeoStationFetcher {
     List data = json.decode(response.body);
     return data.map((e) => e.toString()).toList();
   }
+
+  @override
+  void SetActiveFiltering(bool active) {
+    // TODO: implement SetActiveFiltering
+  }
 }

@@ -114,4 +114,9 @@ class StationsRepository implements StationStorage {
       return true;
     }
   }
+
+  @override
+  void SetActiveFiltering(bool active) {
+    // TODO: implement SetActiveFiltering
+  }
 }
