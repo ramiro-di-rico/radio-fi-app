@@ -1,10 +1,8 @@
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:radio_fi/data/station.dart';
 import 'package:radio_fi/services/station-storage.dart';
 import '../http/http-stations-service.dart';
 import '../initializer.dart';
-import '../repositories/supabase-stations-repository.dart';
 import '../station-fetcher.dart';
 import '../station-manager.dart';
 
@@ -12,8 +10,6 @@ class GeoStationsController extends ChangeNotifier
     implements GeoStationFetcher, StationManager, Initializer {
   String? _countryCode = "AR"; //CountryCodes.detailsForLocale().alpha2Code;
   HttpStationsService _httpStationsService = HttpStationsService();
-  SupabaseStationsRepository _supabaseStationsRepository =
-  SupabaseStationsRepository();
   late StationStorage _stationStorage;
   List<Station> _internalStations = [];
   List<Station> stations = [];
@@ -41,7 +37,8 @@ class GeoStationsController extends ChangeNotifier
     }
 
     try {
-      return await _supabaseStationsRepository.getStationsByCountryCode(countryCode);
+      return await _httpStationsService
+          .getStationsByCountryCode(countryCode);
     } on Exception catch (e) {
       error = e.toString();
       return [];
@@ -105,6 +102,6 @@ class GeoStationsController extends ChangeNotifier
 
   @override
   void SetActiveFiltering(bool active) {
-    _supabaseStationsRepository.SetActiveFiltering(active);
+    _httpStationsService.SetActiveFiltering(active);
   }
 }
