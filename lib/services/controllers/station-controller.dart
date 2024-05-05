@@ -5,13 +5,10 @@ import 'package:radio_fi/services/station-storage.dart';
 import '../../data/station.dart';
 import '../http/http-stations-service.dart';
 import '../initializer.dart';
-import '../repositories/supabase-stations-repository.dart';
 
 class StationsController extends ChangeNotifier
     implements StationFetcher, StationManager, Initializer {
   HttpStationsService _httpStationsService = HttpStationsService();
-  SupabaseStationsRepository _supabaseStationsRepository =
-      SupabaseStationsRepository();
   String _searchText = '';
   bool _editSearchText = false;
   List<Station> stations = [];
@@ -60,7 +57,7 @@ class StationsController extends ChangeNotifier
   @override
   Future<List<Station>> getStations() async {
     var stations = await _stationStorage.isEmpty() || !_initialized
-        ? await _supabaseStationsRepository.getStations()
+        ? await _httpStationsService.getStations()
         : await _stationStorage.getStations();
     return stations;
   }
