@@ -14,7 +14,7 @@ class HttpStationsService implements StationFetcher, GeoStationFetcher {
     var queryParameters = {'Active': 'true', 'CountryCode': countryCode};
 
     var response = await http.get(Uri.https(
-        "ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
+        "www.ramiro-di-rico.dev", "radioapi/api/stations", queryParameters));
     if (response.statusCode == 200) {
       List data = json.decode(response.body);
       var result = data.map((e) => Station.fromJson(e)).toList();

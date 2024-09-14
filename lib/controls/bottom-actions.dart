@@ -32,7 +32,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
     var currentStation = _player.getCurrentStation();
 
     return Container(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Theme.of(context).bottomAppBarTheme.color,
       child: Row(
         children: [
           Expanded(

@@ -17,7 +17,7 @@ dependencies:
   country_codes: ^2.0.1
   flutter_localizations:
     sdk: flutter
-  intl: ^0.18.1
+  intl: ^0.19.0
   sqflite: ^2.0.2+1
   just_audio: ^0.9.27
   just_audio_windows: ^0.1.0
