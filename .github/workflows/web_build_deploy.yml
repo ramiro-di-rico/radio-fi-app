@@ -50,6 +50,6 @@ jobs:
           script: |
             docker stop radio_player_app
             docker rm radio_player_app
-            docker rmi --force thekillingtomato/radio-player-app:latest
+            docker rmi --force thekillingtomato/radio-player-app
             docker pull thekillingtomato/radio-player-app:latest
-            docker run -d -p 9000:9000 --name radio_player_app thekillingtomato/radio-player-app:latest
+            docker run -d -p 9350:80 --name radio_player_app thekillingtomato/radio-player-app:latest
