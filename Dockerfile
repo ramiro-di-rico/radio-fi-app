@@ -1,5 +1,5 @@
 # Install Operating system and dependencies
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS build-env
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -29,7 +29,8 @@ RUN flutter config --enable-web
 RUN mkdir /app/
 COPY . /app/
 WORKDIR /app/
-RUN flutter build web --release --base-href /radio_app/
+#RUN flutter build web --release --base-href /radio_app/
+RUN flutter build web --release
 
 # clean up flutter SDK
 RUN rm -rf /usr/local/flutter
@@ -46,9 +47,16 @@ RUN rm -rf /app/linux
 
 # Record the exposed port
 # See the port below
-EXPOSE 9100
+#EXPOSE 9100
 
 # make server startup script executable and start the web server
-RUN ["chmod", "+x", "/app/server/server.sh"]
+#RUN ["chmod", "+x", "/app/server/server.sh"]
 
-ENTRYPOINT [ "/app/server/server.sh"]
+#ENTRYPOINT [ "/app/server/server.sh"]
+
+
+FROM nginx:1.21.1-alpine
+COPY --from=build-env /app/build/web /usr/share/nginx/html
+
+# EXPOSE <EXPOSE PORT THAT YOU WANT>
+EXPOSE 80
