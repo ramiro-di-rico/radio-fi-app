@@ -29,8 +29,8 @@ RUN flutter config --enable-web
 RUN mkdir /app/
 COPY . /app/
 WORKDIR /app/
-#RUN flutter build web --release --base-href /radio_app/
-RUN flutter build web --release
+RUN flutter build web --release --base-href /radio_app/
+#RUN flutter build web --release
 
 # clean up flutter SDK
 RUN rm -rf /usr/local/flutter
