@@ -21,7 +21,7 @@ ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PAT
 RUN flutter doctor
 
 # Enable flutter web
-RUN flutter channel master
+RUN flutter channel stable
 RUN flutter upgrade
 RUN flutter config --enable-web
 
@@ -46,7 +46,7 @@ RUN rm -rf /app/linux
 
 # Record the exposed port
 # See the port below
-EXPOSE 9000
+EXPOSE 9100
 
 # make server startup script executable and start the web server
 RUN ["chmod", "+x", "/app/server/server.sh"]
