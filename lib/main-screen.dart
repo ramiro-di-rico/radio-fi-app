@@ -32,7 +32,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    Locale locale = CountryCodes.getDeviceLocale()!;
     _stationsController.addListener(updateStationsList);
     _player.addListener(updateStationsList);
     _connectivitySubscription =
