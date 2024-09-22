@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import 'platform_type.dart';
 
@@ -12,4 +12,8 @@ abstract class PlatformContext{
   Future initialize();
 
   PlatformType getPlatformType();
+
+  bool isDarkMode() {
+    return Theme.of(context!).brightness == Brightness.dark;
+  }
 }

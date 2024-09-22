@@ -30,4 +30,10 @@ class NoneWebPlatformImpl implements PlatformContext {
   void setContext(BuildContext buildingContext) {
     // TODO: implement setContext
   }
+
+  @override
+  bool isDarkMode() {
+    // TODO: implement isDarkMode
+    throw UnimplementedError();
+  }
 }

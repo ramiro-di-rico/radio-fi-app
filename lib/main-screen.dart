@@ -8,11 +8,15 @@ import 'controls/bottom-actions.dart';
 import 'controls/radio-app-bar.dart';
 import 'controls/stations-listview.dart';
 import 'services/controllers/player-controller.dart';
+import 'services/platforms/platform_context.dart';
 import 'services/station-manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainScreen extends StatefulWidget {
+
   static const String id = 'main_screen';
+  final PlatformContext platform;
+  MainScreen(this.platform);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -53,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return _isConnected
         ? Scaffold(
-            appBar: RadioAppBar(),
+            appBar: RadioAppBar(widget.platform),
             body: Column(children: [
               Expanded(child: StationsListView()),
               AnimatedOpacity(

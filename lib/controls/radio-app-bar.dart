@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:radio_fi/services/platforms/platform_context.dart';
 import '../info-scree.dart';
 import '../services/station-manager.dart';
 
 class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
   final AppBar _appBar = new AppBar();
+
+  final PlatformContext platform;
+  RadioAppBar(this.platform);
 
   @override
   _RadioAppBarState createState() => _RadioAppBarState();
@@ -73,7 +77,7 @@ class _RadioAppBarState extends State<RadioAppBar> {
         padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),
         height: 50,
         decoration: BoxDecoration(
-            color: lighten(theme.primaryColor),
+            color: lighten(widget.platform.isDarkMode() ? theme.primaryColor : theme.primaryColorLight),
             borderRadius: BorderRadius.all(Radius.circular(70))),
         duration: Duration(seconds: 2),
         curve: Curves.fastLinearToSlowEaseIn,
