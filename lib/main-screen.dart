@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'controls/bottom-actions.dart';
@@ -27,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
+    Locale locale = CountryCodes.getDeviceLocale()!;
     _stationsController.addListener(updateStationsList);
     _player.addListener(updateStationsList);
     _connectivitySubscription =

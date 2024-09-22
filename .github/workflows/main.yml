@@ -20,11 +20,6 @@ jobs:
     - run: flutter pub get
     #- run: flutter test need to include test folder
 
-    - name: Generate Secret Keys
-      run: echo $SECRET_KEYS | base64 -d > lib/secret_keys.dart
-      env:
-        SECRET_KEYS: ${{ secrets.SECRET_KEYS }}
-
     - name: Get build name
       id: build_name
       run: echo ::set-output name=VERSION::$(echo ${{ github.ref_name }} | cut -d '-' -f 1)

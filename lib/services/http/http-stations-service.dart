@@ -27,7 +27,7 @@ class HttpStationsService implements StationFetcher, GeoStationFetcher {
 
   Future<List<String>> getCountryCodes() async {
     var response = await http.get(
-        Uri.https("ramiro-di-rico.dev", "radioapi/api/stations/countryCodes"));
+        Uri.https("www.ramiro-di-rico.dev", "radioapi/api/stations/countryCodes"));
     List data = json.decode(response.body);
     return data.map((e) => e.toString()).toList();
   }

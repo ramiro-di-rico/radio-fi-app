@@ -23,7 +23,6 @@ dependencies:
   just_audio_windows: ^0.1.0
   msix: ^3.6.2
   connectivity_plus: ^2.3.6
-  supabase_flutter: ^1.10.25
 
 flutter:
   uses-material-design: true
