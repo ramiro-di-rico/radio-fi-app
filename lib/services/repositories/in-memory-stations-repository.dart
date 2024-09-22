@@ -1,5 +1,5 @@
-import 'package:radio_fi/data/station.dart';
-import 'package:radio_fi/services/station-storage.dart';
+import '../../data/station.dart';
+import '../station-storage.dart';
 
 class InMemoryStationsRepository implements StationStorage {
   List<Station> _stations = [];

@@ -8,5 +8,5 @@ void main() async {
   var platform = PlatformStrategy.createPlatform();
   await platform.initialize();
 
-  runApp(new MyApp());
+  runApp(new MyApp(platform));
 }

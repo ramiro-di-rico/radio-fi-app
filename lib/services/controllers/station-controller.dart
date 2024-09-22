@@ -7,7 +7,7 @@ import '../http/http-stations-service.dart';
 import '../initializer.dart';
 
 class StationsController extends ChangeNotifier
-    implements StationFetcher, StationManager, Initializer {
+    implements StationFetcher, StationViewManager, Initializer {
   HttpStationsService _httpStationsService = HttpStationsService();
   String _searchText = '';
   bool _editSearchText = false;

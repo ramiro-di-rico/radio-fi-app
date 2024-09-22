@@ -12,7 +12,7 @@ class AppConfiguration extends StatefulWidget {
 
 class _AppConfigurationState extends State<AppConfiguration> {
 
-  StationManager _stationFetcher = GetIt.instance<StationManager>();
+  StationViewManager _stationFetcher = GetIt.instance<StationViewManager>();
   bool isActive = true;
 
   @override

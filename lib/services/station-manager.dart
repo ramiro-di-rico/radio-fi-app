@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/widgets.dart';
 import '../data/station.dart';
 
-abstract class StationManager extends ChangeNotifier {
+abstract class StationViewManager extends ChangeNotifier {
   Iterable<Station> search(String stationName);
   bool isSearching();
   void setFavorite(Station station, bool star);
