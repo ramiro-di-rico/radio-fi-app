@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:radio_fi/data/station.dart';
-import 'package:radio_fi/services/station-player.dart';
+
+import '../../data/station.dart';
+import '../station-player.dart';
 
 class PlayerController extends ChangeNotifier implements StationPlayer {
   AudioPlayer _flutterRadioPlayer = new AudioPlayer();

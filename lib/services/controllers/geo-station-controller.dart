@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:radio_fi/data/station.dart';
-import 'package:radio_fi/services/station-storage.dart';
+import '../../data/station.dart';
 import '../http/http-stations-service.dart';
 import '../initializer.dart';
 import '../station-fetcher.dart';
 import '../station-manager.dart';
+import '../station-storage.dart';
 
 class GeoStationsController extends ChangeNotifier
     implements GeoStationFetcher, StationViewManager, Initializer {

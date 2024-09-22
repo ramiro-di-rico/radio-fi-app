@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/widgets.dart';
 import '../data/station.dart';
 
 abstract class StationViewManager extends ChangeNotifier {

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:radio_fi/data/station.dart';
-import 'package:radio_fi/services/station-fetcher.dart';
 import 'package:http/http.dart' as http;
+import '../../data/station.dart';
+import '../station-fetcher.dart';
 
 class HttpStationsService implements StationFetcher, GeoStationFetcher {
   @override
