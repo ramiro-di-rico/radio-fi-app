@@ -14,7 +14,7 @@ class MobilePlatform extends PlatformContext {
     await CountryCodes.init();
     var controller = GeoStationsController(StationsRepository());
     controller.initialize();
-    GetIt.instance.registerSingleton<StationManager>(controller);
+    GetIt.instance.registerSingleton<StationViewManager>(controller);
     GetIt.instance.registerSingleton(PlayerController());
   }
 

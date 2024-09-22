@@ -10,7 +10,7 @@ class StationsListView extends StatefulWidget {
 }
 
 class _StationsListViewState extends State<StationsListView> {
-  StationManager _stationsController = GetIt.instance<StationManager>();
+  StationViewManager _stationsController = GetIt.instance<StationViewManager>();
   ScrollController _scrollController = ScrollController();
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _isLoading = false;

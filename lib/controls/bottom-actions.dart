@@ -9,7 +9,7 @@ class BottomActionWidget extends StatefulWidget {
 }
 
 class _BottomActionWidgetState extends State<BottomActionWidget> {
-  StationManager _stationsController = GetIt.instance<StationManager>();
+  StationViewManager _stationsController = GetIt.instance<StationViewManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
   double volume = 1.0;
 

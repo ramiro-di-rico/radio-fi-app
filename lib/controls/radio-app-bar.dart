@@ -15,7 +15,7 @@ class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _RadioAppBarState extends State<RadioAppBar> {
-  StationManager _stationsController = GetIt.instance<StationManager>();
+  StationViewManager _stationsController = GetIt.instance<StationViewManager>();
   String currentText = '';
   late Widget searchBarIconButton;
   late FocusNode searchBarFocusNode;

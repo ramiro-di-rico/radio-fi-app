@@ -12,7 +12,7 @@ class DesktopPlatform extends PlatformContext {
   Future initialize() async {
     var controller = StationsController(InMemoryStationsRepository());
     controller.initialize();
-    GetIt.instance.registerSingleton<StationManager>(controller);
+    GetIt.instance.registerSingleton<StationViewManager>(controller);
     GetIt.instance.registerSingleton(PlayerController());
   }
 

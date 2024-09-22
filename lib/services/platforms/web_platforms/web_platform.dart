@@ -23,7 +23,7 @@ class WebPlatformImpl extends PlatformContext {
 
     var controller = StationsController(InMemoryStationsRepository());
     controller.initialize();
-    GetIt.instance.registerSingleton<StationManager>(controller);
+    GetIt.instance.registerSingleton<StationViewManager>(controller);
     GetIt.instance.registerSingleton(PlayerController());
   }
 

@@ -19,7 +19,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  StationManager _stationsController = GetIt.instance<StationManager>();
+  StationViewManager _stationsController = GetIt.instance<StationViewManager>();
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _displayBottomBar = false;
   bool _isConnected = true;
