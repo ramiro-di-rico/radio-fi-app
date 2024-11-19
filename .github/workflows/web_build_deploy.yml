@@ -48,8 +48,5 @@ jobs:
           passphrase: ${{ secrets.HETZNER_PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            docker stop radio_player_app
-            docker rm radio_player_app
-            docker rmi --force thekillingtomato/radio-player-app
-            docker pull thekillingtomato/radio-player-app:latest
-            docker run -d -p 9350:80 --name radio_player_app thekillingtomato/radio-player-app:latest
+            docker compose -f home-management-all/docker-compose.yml pull radio-web-player
+            docker compose -f home-management-all/docker-compose.yml up -d
