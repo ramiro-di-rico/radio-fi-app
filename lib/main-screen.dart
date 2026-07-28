@@ -10,7 +10,7 @@ import 'controls/stations-listview.dart';
 import 'services/controllers/player-controller.dart';
 import 'services/platforms/platform_context.dart';
 import 'services/station-manager.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:radio_fi/l10n/app_localizations.dart';
 
 class MainScreen extends StatefulWidget {
 
@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   PlayerController _player = GetIt.instance<PlayerController>();
   bool _displayBottomBar = false;
   bool _isConnected = true;
-  StreamSubscription<ConnectivityResult>? _connectivitySubscription;
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
 
   @override
   void initState() {
@@ -37,9 +37,9 @@ class _MainScreenState extends State<MainScreen> {
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((event) {
       setState(() {
-        _isConnected = event == ConnectivityResult.wifi ||
-            event == ConnectivityResult.mobile ||
-            event == ConnectivityResult.ethernet;
+        _isConnected = event.contains(ConnectivityResult.wifi) ||
+            event.contains(ConnectivityResult.mobile) ||
+            event.contains(ConnectivityResult.ethernet);
       });
     });
   }

@@ -1,7 +1,7 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:radio_fi/l10n/app_localizations.dart';
 
 import '../services/controllers/geo-station-controller.dart';
 

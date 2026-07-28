@@ -2,6 +2,15 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.BACKGROUND_SERVICE"/>
+
+    <!-- Allow this app to install and run on Wear OS devices as a standalone app. -->
+    <uses-feature
+        android:name="android.hardware.type.watch"
+        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false"/>
+
     <application
         android:label="radio_fi_app"
         android:name="${applicationName}"
@@ -32,5 +41,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <!-- Marks this app as a standalone Wear OS app, so it can run
+             without a companion phone app being installed. -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
     </application>
 </manifest>

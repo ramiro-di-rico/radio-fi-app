@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:radio_fi/services/platforms/platform_context.dart';
 import 'info-scree.dart';
 import 'main-screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:radio_fi/l10n/app_localizations.dart';
 
 class MyApp extends StatefulWidget {
   final PlatformContext platform;

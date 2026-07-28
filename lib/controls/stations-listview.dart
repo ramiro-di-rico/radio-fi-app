@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../services/controllers/player-controller.dart';
 import '../services/station-manager.dart';
+import '../services/responsive.dart';
 import 'picture-widget.dart';
 
 class StationsListView extends StatefulWidget {
@@ -37,10 +38,14 @@ class _StationsListViewState extends State<StationsListView> {
 
   @override
   Widget build(BuildContext context) {
+    var isWatch = isWatchScreen(context);
     return _stationsController.stations.isEmpty
         ? Center(child: CircularProgressIndicator())
         : ListView.builder(
             controller: _scrollController,
+            // Extra horizontal padding on watch screens keeps list items
+            // away from the curved edges of round/small displays.
+            padding: EdgeInsets.symmetric(horizontal: isWatch ? 12 : 0),
             itemCount: _stationsController.stations.length,
             itemBuilder: (context, index) {
               var station = _stationsController.stations[index];

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../services/controllers/player-controller.dart';
 import '../services/station-manager.dart';
+import '../services/responsive.dart';
 
 class BottomActionWidget extends StatefulWidget {
   @override
@@ -30,17 +31,20 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
   Widget build(BuildContext context) {
     if (!_player.isPlaying()) return Container();
     var currentStation = _player.getCurrentStation();
+    var isWatch = isWatchScreen(context);
+    var nameLength = isWatch ? 6 : 10;
 
     return Container(
       color: Theme.of(context).bottomAppBarTheme.color,
+      padding: EdgeInsets.symmetric(horizontal: isWatch ? 4 : 0),
       child: Row(
         children: [
           Expanded(
             flex: 2,
             child: TextButton(
               onPressed: () {}, //() => _player.displayCurrentStation(),
-              child: Text(currentStation.name.length > 10
-                  ? currentStation.name.substring(0, 10)
+              child: Text(currentStation.name.length > nameLength
+                  ? currentStation.name.substring(0, nameLength)
                   : currentStation.name),
             ),
           ),

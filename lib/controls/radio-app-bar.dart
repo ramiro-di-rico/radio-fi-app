@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:radio_fi/l10n/app_localizations.dart';
 import 'package:radio_fi/services/platforms/platform_context.dart';
 import '../info-scree.dart';
 import '../services/station-manager.dart';
+import '../services/responsive.dart';
 
 class RadioAppBar extends StatefulWidget implements PreferredSizeWidget {
   final AppBar _appBar = new AppBar();
@@ -61,10 +62,11 @@ class _RadioAppBarState extends State<RadioAppBar> {
     var isSearching = _stationsController.isSearching();
     var theme = Theme.of(context);
     var width = MediaQuery.of(context).size.width;
+    var isWatch = isWatchScreen(context);
     return [
       Row(
         children: [
-          Text(AppLocalizations.of(context)!.appTitle),
+          if (!isWatch) Text(AppLocalizations.of(context)!.appTitle),
           IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, InfoScreen.id);
@@ -73,9 +75,9 @@ class _RadioAppBarState extends State<RadioAppBar> {
         ],
       ),
       AnimatedContainer(
-        width: isSearching ? (width / 2) : 50,
-        padding: EdgeInsets.symmetric(horizontal: isSearching ? 20 : 5),
-        height: 50,
+        width: isSearching ? (width / (isWatch ? 1.3 : 2)) : (isWatch ? 40 : 50),
+        padding: EdgeInsets.symmetric(horizontal: isSearching ? (isWatch ? 10 : 20) : 5),
+        height: isWatch ? 40 : 50,
         decoration: BoxDecoration(
             color: lighten(widget.platform.isDarkMode() ? theme.primaryColor : theme.primaryColorLight),
             borderRadius: BorderRadius.all(Radius.circular(70))),
